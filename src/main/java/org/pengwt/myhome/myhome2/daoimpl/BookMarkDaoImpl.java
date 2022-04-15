@@ -1,10 +1,10 @@
-package org.nini.simple.daoimpl;
+package org.pengwt.myhome.myhome2.daoimpl;
 
 import com.ibatis.common.resources.Resources;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapClientBuilder;
-import org.nini.simple.dao.BookMarkDao;
-import org.nini.simple.entity.BookMark;
+import org.pengwt.myhome.myhome2.dao.BookMarkDao;
+import org.pengwt.myhome.myhome2.entity.BookMark;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -101,6 +101,17 @@ public class BookMarkDaoImpl implements BookMarkDao {
     @Override
     public boolean delBookMark(long id) {
         return this.deleteBookMarkById(id);
+    }
+
+    @Override
+    public boolean updateBookMark(BookMark bookMark) {
+        try {
+            int r = sqlMapClient.update("updateBookMark");
+            return r > 0 ?  true : false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /*

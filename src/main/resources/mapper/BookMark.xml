@@ -28,7 +28,7 @@
         delete  cc where id=#id#
     </delete>
 
-    <update id="updateBookMark" parameterClass="java.util.HashMap">
+    <update id="updateBookMark" parameterClass="BookMark">
         update cc set name=#name#,url=#url# where id=#id#
     </update>
 

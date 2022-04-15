@@ -1,4 +1,4 @@
-package org.nini.simple.entity;
+package org.pengwt.myhome.myhome2.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

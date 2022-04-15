@@ -1,9 +1,7 @@
-package org.nini.simple.dao;
-
+package org.pengwt.myhome.myhome2.dao;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.nini.simple.entity.BookMark;
-
+import org.pengwt.myhome.myhome2.entity.BookMark;
 import java.util.List;
 
 /**

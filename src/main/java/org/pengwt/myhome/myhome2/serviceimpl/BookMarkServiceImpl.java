@@ -1,12 +1,12 @@
-package org.nini.simple.serviceimpl;
+package org.pengwt.myhome.myhome2.serviceimpl;
 
-import org.nini.simple.dao.BookMarkDao;
-import org.nini.simple.entity.BookMark;
-import org.nini.simple.service.BookMarkService;
+import org.pengwt.myhome.myhome2.dao.BookMarkDao;
+import org.pengwt.myhome.myhome2.entity.BookMark;
+import org.pengwt.myhome.myhome2.service.BookMarkService;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.Resource;
 import java.util.List;
+
 @Component
 public class BookMarkServiceImpl implements BookMarkService {
     @Resource
@@ -26,4 +26,5 @@ public class BookMarkServiceImpl implements BookMarkService {
     public boolean saveBookMark(BookMark bookMark) {
         return false;
     }
+
 }
