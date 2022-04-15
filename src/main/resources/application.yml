@@ -1,0 +1,12 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: cloud-provider-payment-server
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.alibaba.druid.proxy.DruidDriver
+    url: jdbc:mysql://
+    username: xxx
+    password: xxx
+

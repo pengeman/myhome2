@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+    <typeAlias alias="BookMark" type="org.nini.simple.entity.BookMark"/>
+
+    <select id="selectAllBookMark" resultClass="BookMark">
+        select id,name,url from cc
+    </select>
+
+    <select id="selectBookMarkById" parameterClass="java.lang.Integer" resultClass="BookMark">
+        select * from cc where id=#id#
+    </select>
+
+    <select id="getver" resultClass="int">
+        select code from ver_
+    </select>
+
+    <insert id="saveBookMark" parameterClass="BookMark">
+        insert into cc(name,url) values(#name:varchar#, #url:varchar#)
+    </insert>
+
+    <insert id="insertver" parameterClass="int">
+        insert into ver_ (`code`) values(#ver:int#)
+    </insert>
+
+    <delete id="deleteBookMarkById" parameterClass="int">
+        delete  cc where id=#id#
+    </delete>
+
+    <update id="updateBookMark" parameterClass="java.util.HashMap">
+        update cc set name=#name#,url=#url# where id=#id#
+    </update>
+
+    <statement id="createTablecc">
+        CREATE TABLE `cc` (`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,`name` CHAR, `url` CHAR)
+    </statement>
+
+    <statement id="createTablever">
+        CREATE TABLE `ver_` (`code` INTEGER NOT NULL)
+    </statement>
+</sqlMap>
