@@ -24,12 +24,13 @@ public class BookMarkController {
         log.debug(jsonString);
         return jsonString;
     }
-
+@GetMapping(value = "/myhome")
     public ModelAndView showBookMarks(){
         List<BookMark> bms = bookMarkService.getAllBookMarks();
         String jsonString = JSON.toJSONString(bms);
         //System.out.println(jsonString);
         log.debug(jsonString);
+        //怎么写freemarker
         return new ModelAndView("showBookMarks");
     }
 }
