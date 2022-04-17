@@ -11,7 +11,8 @@ import java.util.Date;
 import java.util.Properties;
 
 /**
- * @Description 一个门岗,判断是否第一次运行app,以便建立数据库配置
+ * @Description 一个门岗,判断是否第一次运行app,以便建立数据库配置,判断家目录下/MyHomePage/data/目录是否存在
+ * 判断数据库文件myhome是否存在,编辑mapper/SqlMap.properties数据库配置
  * @Author pengweitao
  * @param
  * @exception

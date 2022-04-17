@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Myhome2Application {
 
 	public static void main(String[] args) {
-//		new NewMan().firstone(1);
+		new NewMan().firstone(1);
 		SpringApplication.run(Myhome2Application.class, args);
 	}
 

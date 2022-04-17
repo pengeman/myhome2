@@ -19,30 +19,26 @@ title,
         .datetable thead td{padding:10px 5px;font:normal 12px/normal 'microsoft yahei';color:#fff;text-align:center;}
         .datetable thead td span{padding:0 5px;}
         .datetable tbody td{padding:5px 3px;font-size:12px;}
+        .cpic {max-width: 100px; max-height: 40px;}
     </style>
 </head>
 <body onload="initial();" >
 
-<form action="https://www.bing.com/search?scope=web">
-</form>
-
-
-
 <!-- 百度搜索 -->
-<form action="http://www.baidu.com/s" method="get" target="_blank" id="form1"  >
+<form action="https://www.baidu.com/s" method="get" target="_blank" id="form1"  >
     <div>
-        <a href="http://www.baidu.com/" id="s1"><img src="image/baidu.jpeg"></a>
-        <a href="http://www.bing.com/" id="s2"><img src="image/binglog.jpeg"></a>
-        <a href="http://www.google.com/" id="s3"><img src="image/google.png"></a>
+        <a href="https://www.baidu.com/" id="s1" style="display: block"><img src="image/baidu.jpeg" class="cpic" ></a>
+        <a href="https://www4.bing.com/" id="s2" style="display: none"><img src="image/binglog.jpeg" class="cpic" ></a>
+        <a href="https://www.google.com/" id="s3" style="display: none"><img src="image/google.png" class="cpic" ></a>
         <br/>
 
         <input type="text" name="word" id="word" style="width:500px;height:30px">
 
         <input type="submit" class="ss_btn" id="search_btn"   value="搜 索">
         <input type="button" value="clear" onclick="javascript:cls();"><br/>
-        <input type="radio" name="sex" value="bai" onclick="radioClicked(1)">百度
-        <input type="radio" name="sex" value="bing" onclick="radioClicked(2)">比应
-        <input type="radio" name="sex" value="goo" onclick="radioClicked(3)">谷歌
+        <input type="radio" id = "r1" name="x" value=" " onclick="radioClicked(1)" checked="checked">百度
+        <input type="radio"  id = "r2" name="x" value=" " onclick="radioClicked(2)">比应
+        <input type="radio"  id = "r3" name="x" value=" " onclick="radioClicked(3)">谷歌
     </div>
 </form>
 <!-- 百度搜索 end -->
@@ -457,6 +453,7 @@ title,
     var tD = Today.getDate();
     //打开页时,在下拉列表中显示当前年月,并调用自定义函数drawCld(),显示公历和农历的相关信息
     function initial() {
+        document.getElementById("r1").checked = true;
         CLD.SY.selectedIndex=tY-1900;
         CLD.SM.selectedIndex=tM;
         drawCld(tY,tM);
@@ -473,19 +470,22 @@ title,
             document.getElementById("s1").style.display = "block";
             document.getElementById("s2").style.display = "none";
             document.getElementById("s3").style.display = "none";
+            document.getElementById("word").name="word";
             document.getElementById("form1").action= "https://www.baidu.com/s";
         }
         if (v == 2){
-            document.getElementById("s1").style.display = "note";
+            document.getElementById("s1").style.display = "none";
             document.getElementById("s2").style.display = "block";
             document.getElementById("s3").style.display = "none";
-            document.getElementById("form1").action= "https://www.bing.com/search";
+            document.getElementById("word").name="q";
+            document.getElementById("form1").action= "https://www4.bing.com/search";
         }
         if (v == 3){
-            document.getElementById("s1").style.display = "note";
+            document.getElementById("s1").style.display = "none";
             document.getElementById("s2").style.display = "none";
             document.getElementById("s3").style.display = "block";
-            document.getElementById("form1").action= "https://www.google.com/search_btn";
+            document.getElementById("word").name="q";
+            document.getElementById("form1").action= "https://www.google.com/search";
         }
     }
 
