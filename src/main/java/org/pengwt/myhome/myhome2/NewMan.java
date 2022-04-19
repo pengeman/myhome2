@@ -101,11 +101,4 @@ public class NewMan {
         }
     }
 
-    //写入Properties信息
-
-    public static void WriteProperties(String filePath, String pKey, String pValue) throws IOException {
-
-
-    }
-
 }
