@@ -4,9 +4,7 @@ server:
 spring:
   application:
     name: myhome
-  resources:
-    static-locations:classpath:/web/, classpath:/static/
-  # freemarker模板引擎
+  # freemarker 模板引擎
   freemarker:
     allow-request-override: true
     allow-session-override: true
@@ -19,26 +17,4 @@ spring:
     template-loader-path: classpath:/templates/,classpath:/static/,classpath:/web/
     prefix:
     suffix: .ftl
-
     content-type: text/html
-
-#    settings:
-#      template_update_delay: 0
-#      url_escaping_charset: UTF-8
-#      locale: UTF-8
-#      datetime_format: yyyy-MM-dd HH:mm:ss
-#      date_format: yyyy-MM-dd
-#      time_format: HH:mm:ss
-#      template_exception_handler: html_debug
-#      # 数字格式化，无小数点
-#      number_format: 0.#
-#      # 设置freemarker标签 0,1,2 0=自动识别，默认1
-#      tag_syntax: auto_detect
-
-
-  #  datasource:
-  #    type: com.alibaba.druid.pool.DruidDataSource
-  #    driver-class-name: com.alibaba.druid.proxy.DruidDriver
-  #    url: jdbc:mysql://
-  #    username: xxx
-  #    password: xxx

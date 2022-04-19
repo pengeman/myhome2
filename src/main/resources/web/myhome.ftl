@@ -85,7 +85,7 @@ title,
                 <br/>
                 <a href="https://www.speedtest.cn" title="speedtest" target="_blank" >在线测速</a>
                 <a href="https://www.cnblogs.com/" title="cnblogs" target="_blank">我的博客</a>
-                <a href="https://home.zoho.com.cn/home" target="_blank">zoho笔记</a>
+                <a href="https://home.zoho.com.cn/home" target="_blank">zoho笔记</a><br/>
                 <#list rows as bookmark >
                     <#if bookmark.id == 3><br/></#if>
                     <a href="${bookmark.url}" target="_blank" title="${bookmark.name}">${bookmark.name}</a>
