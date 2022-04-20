@@ -1,6 +1,7 @@
 # myhome2
 我的首页,收藏我喜欢的网站
 
+http://localhost:8001/myhome
 
 ## how to build
 ```bash

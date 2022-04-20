@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.apache.juli.logging.Log;
 
 import java.io.*;
@@ -31,6 +32,10 @@ public class NewMan {
 
     static public String getSqlConfigPath() {
         return SQL_CONFIG_PATH;
+    }
+
+    static public String getDBFilePath() {
+        return DATA_DIR + FILE_DB;
     }
 
     /*
@@ -63,11 +68,12 @@ public class NewMan {
         }
     }
 
-    private void createDB(int ver) throws IOException {
+    void createDB(int ver) throws IOException {
         // 讲db文件写入制定的目录
-        File srcfile = Resources.getResourceAsFile("mapper/" + FILE_DB);
+        // 因为无法通过 new File 来访问jar中的文件, 所以使用流
+        val srcfile = Resources.getResourceAsStream("mapper/" + FILE_DB);
         File descFile = new File(DATA_DIR + FILE_DB);
-        Files.copy(srcfile.toPath(), descFile.toPath());
+        Files.copy(srcfile, descFile.toPath());
         log.info("createDB {} -> {}", srcfile, descFile);
     }
 
