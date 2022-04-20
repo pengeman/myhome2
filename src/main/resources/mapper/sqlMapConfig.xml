@@ -2,9 +2,12 @@
 <!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
         "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
 <sqlMapConfig>
-    <!-- 引用JDBC属性的配置文件 -->
-    <properties resource="mapper/SqlMap.properties"/>
-<!--     使用JDBC的事务管理 -->
+    <!-- 引用JDBC属性的配置文件,
+    具体路径参考 org.pengwt.myhome.myhome2.NewMan.SQL_CONFIG_PATH
+    -->
+    <properties url="${SqlMapConfig}"/>
+
+    <!--     使用JDBC的事务管理 -->
     <transactionManager type="JDBC">
         <!-- 数据源 -->
         <dataSource type="SIMPLE">
