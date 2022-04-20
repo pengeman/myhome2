@@ -3,6 +3,8 @@ package org.pengwt.myhome.myhome2.daoimpl;
 import com.ibatis.common.resources.Resources;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapClientBuilder;
+import lombok.val;
+import org.pengwt.myhome.myhome2.NewMan;
 import org.pengwt.myhome.myhome2.dao.BookMarkDao;
 import org.pengwt.myhome.myhome2.entity.BookMark;
 import org.springframework.stereotype.Component;
@@ -16,7 +18,6 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- *
  * @param
  * @author pengweitao 2022/4/11
  * @version v0.1
@@ -29,15 +30,24 @@ public class BookMarkDaoImpl implements BookMarkDao {
     private static SqlMapClient sqlMapClient = null;
 
 
-    public BookMarkDaoImpl() {
-        Reader reader = null;
+    /**
+     * see {@link com.ibatis.sqlmap.engine.builder.xml.SqlMapConfigParser#addGlobalPropNodelets() }
+     */
+    public SqlMapClient getSqlMapClient() {
         try {
-            reader = Resources.getResourceAsReader("mapper/sqlMapConfig.xml");
-            sqlMapClient = SqlMapClientBuilder.buildSqlMapClient(reader);
+            val properties = new Properties();
+            val sqlMapConfigUrl = new File(NewMan.getSqlConfigPath()).toURI().toString();
+            properties.put("SqlMapConfig", sqlMapConfigUrl);
+            Reader reader = Resources.getResourceAsReader("mapper/sqlMapConfig.xml");
+            return SqlMapClientBuilder.buildSqlMapClient(reader, properties);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
+    }
 
+    public BookMarkDaoImpl() {
+        sqlMapClient = getSqlMapClient();
     }
 
     public boolean saveBookMark(BookMark bookMark) {
@@ -102,7 +112,7 @@ public class BookMarkDaoImpl implements BookMarkDao {
     public boolean updateBookMark(BookMark bookMark) {
         try {
             int r = sqlMapClient.update("updateBookMark");
-            return r > 0 ?  true : false;
+            return r > 0 ? true : false;
         } catch (SQLException e) {
             e.printStackTrace();
         }

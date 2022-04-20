@@ -4,5 +4,10 @@
 
 ## how to build
 ```bash
-mvn clean -Dmaven.test.skip=true package
+mvn clean package -Dmaven.test.skip=true -T4
+```
+
+## local test
+```bash
+java -jar target/myhome2-0.0.1-SNAPSHOT.jar 
 ```
