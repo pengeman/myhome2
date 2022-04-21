@@ -17,7 +17,7 @@
     </select>
 
     <insert id="saveBookMark" parameterClass="BookMark">
-        insert into cc(name,url) values(#name:varchar#, #url:varchar#)
+        insert into cc(name,url) values(#name#, #url#)
     </insert>
 
     <insert id="insertver" parameterClass="int">

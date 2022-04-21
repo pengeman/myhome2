@@ -1,17 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html id="html" xmlns="http://www.w3.org/1999/xhtml">
-<#--  要替换的参数
-title,
--->
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
 <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
-    <base target="_blank" />
-    <title>${title}</title>
-
     <style>
-        *{margin:1px;padding:1px;list-style:none;border:1px;}
-        body{background:#fffbe6;}
+        *{margin:1;padding:1;list-style:none;border:1;}
+        body{background:#fff;}
         .content{border:3px solid #ddd;width:455px;margin-left:20px;margin-top: 50px;float:left;}
         .datetable{border-top:1px solid #ccc;border-left:1px solid #ccc;background:#fff;}
         .datetable td{border-bottom:1px solid #ccc;border-right:1px solid #ccc;text-align:center;}
@@ -19,31 +13,20 @@ title,
         .datetable thead td{padding:10px 5px;font:normal 12px/normal 'microsoft yahei';color:#fff;text-align:center;}
         .datetable thead td span{padding:0 5px;}
         .datetable tbody td{padding:5px 3px;font-size:12px;}
-        .cpic {max-width: 100px; max-height: 40px;}
-
     </style>
-<style type="text/css">
-    body{overflow: auto}
-    #tcss{ width:400px; overflow:hidden}
-    .left{ float:left; width:180px; border:1px solid #F00}
-    .right{ float:right; width:200px; border:1px solid #00F}
-</style>
+    <title>my home</title>
 </head>
 <body onload="initial();" >
 
+
 <!-- 百度搜索 -->
-<form action="https://www.baidu.com/s" method="get" target="_blank" id="form1"  >
+<form action="https://www.baidu.com/s" method="get" target="_blank" name="bdfm" >
     <div>
-        <a href="https://www.baidu.com/" id="s1" style="display: block"><img src="image/baidu.jpeg" class="cpic" ></a>
-        <a href="https://www4.bing.com/" id="s2" style="display: none"><img src="image/binglog.jpeg" class="cpic" ></a>
-        <a href="https://www.google.com/" id="s3" style="display: none"><img src="image/google.png" class="cpic" ></a>
-<a href="gosetup" class="right">SETUP</a>
-        <input type="text" name="word" id="word" style="width:500px;height:30px;background-color: #FDD6DC">
-        <input type="submit" class="ss_btn" id="search_btn" style="width:40px;height:30px;background-color:#FDD6DC"  value="搜 索">
-        <input type="button" value="clear" onclick="javascript:cls();"><br/>
-        <input type="radio" id = "r1" name="x" value=" " onclick="radioClicked(1)" checked="checked">百度
-        <input type="radio"  id = "r2" name="x" value=" " onclick="radioClicked(2)">比应
-        <input type="radio"  id = "r3" name="x" value=" " onclick="radioClicked(3)">谷歌
+        <a  href="http://www.baidu.com/index.php?"><img src="https://www.baidu.com/img/baidu_jgylogo3.gif"></a>
+
+        <input type="text"  name="word" id="word">
+        <input type="submit" class="ss_btn" id="search_btn" onclick="cc('search');radioClick();"  value="搜 索">
+        <input type="button" value="clear" onclick="javascript:cls();">
     </div>
 </form>
 <!-- 百度搜索 end -->
@@ -52,7 +35,7 @@ title,
 
     <!-- search tools -->
 
-    <h2>实用查询</h2>
+    <h2><a target="_blank"   href="http://tools.2345.com/?gjb">实用查询</a> <a target="_blank" href="setup.do?p=all">setup</a></h2>
     <div class="box_cnt sstool">
         <ul>
             <li>
@@ -88,13 +71,15 @@ title,
                 <a href="http://blog.chinaunix.net/" title="chinaunix" target="_blank">我的博客</a>
                 <a href="http://www.xnote.cn/note/category/" title="xnote" target="_blank">在线笔记</a>
                 <br/>
-                <a href="https://www.speedtest.cn" title="speedtest" target="_blank" >在线测速</a>
+                <a href="https://www.speedtest.cn" title="speedtest" target="_blank">在线测速</a>
                 <a href="https://www.cnblogs.com/" title="cnblogs" target="_blank">我的博客</a>
-                <a href="https://home.zoho.com.cn/home" target="_blank">zoho笔记</a><br/>
-                <#list rows as bookmark >
-                    <#if bookmark.id == 3><br/></#if>
-                    <a href="${bookmark.url}" target="_blank" title="${bookmark.name}">${bookmark.name}</a>
-                </#list>
+                <a href="https://home.zoho.com.cn/home" target="_blank">zoho笔记</a>
+                <br/>
+
+<c:forEach items="${rows}"    var="bookmark" varStatus="i">
+    <c:if test="${i.index == 3}"><br/></c:if>
+    <a href="${bookmark.url}" target="_blank" title="${bookmark.name}">${bookmark.name}</a>
+</c:forEach>
             </li>
         </ul>
         <h4>
@@ -113,12 +98,12 @@ title,
             <td colSpan=7><span>公历</span>
                 <select name="SY" onchange="changeCld();" style="font-SIZE: 9pt">
                     <script>
-                        for(i=1900;i  2050;i++) document.write('<option>'+i + '</option>');
+                        for(i=1900;i<2050;i++) document.write('<option>'+i);
                     </script>
                 </select><span>年</span>
                 <select name="SM" onchange="changeCld();" style="font-SIZE: 9pt">
                     <script>
-                        for(i=1;i<13;i++) document.write('<option>'+i + '</option>');
+                        for(i=1;i<13;i++) document.write('<option>'+i);
                     </script>
                 </select><span>月</span>
                 </font><span id="GZ"></span>
@@ -161,7 +146,6 @@ title,
 
 
 </html>
-
 
 <script type="text/javascript">
 
@@ -454,43 +438,14 @@ title,
     var tD = Today.getDate();
     //打开页时,在下拉列表中显示当前年月,并调用自定义函数drawCld(),显示公历和农历的相关信息
     function initial() {
-        document.getElementById("r1").checked = true;
         CLD.SY.selectedIndex=tY-1900;
         CLD.SM.selectedIndex=tM;
         drawCld(tY,tM);
     }
 </script>
 <script type="text/javascript">
-    var v = 0;
     function cls(){
         document.getElementById("word").value="";
     }
-    function radioClicked(v){
-        this.v = v;
-        if (v == 1){
-            document.getElementById("s1").style.display = "block";
-            document.getElementById("s2").style.display = "none";
-            document.getElementById("s3").style.display = "none";
-            document.getElementById("word").name="word";
-            document.getElementById("form1").action= "https://www.baidu.com/s";
-        }
-        if (v == 2){
-            document.getElementById("s1").style.display = "none";
-            document.getElementById("s2").style.display = "block";
-            document.getElementById("s3").style.display = "none";
-            document.getElementById("word").name="q";
-            document.getElementById("form1").action= "https://www4.bing.com/search";
-        }
-        if (v == 3){
-            document.getElementById("s1").style.display = "none";
-            document.getElementById("s2").style.display = "none";
-            document.getElementById("s3").style.display = "block";
-            document.getElementById("word").name="q";
-            document.getElementById("form1").action= "https://www.google.com/search";
-        }
-    }
-
-    function cc(s){
-    }
 </script>
-
+</html>
