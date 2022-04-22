@@ -92,8 +92,8 @@ title,
                 <a href="https://www.cnblogs.com/" title="cnblogs" target="_blank">我的博客</a>
                 <a href="https://home.zoho.com.cn/home" target="_blank">zoho笔记</a><br/>
                 <#list rows as bookmark >
-                    <#if bookmark.id == 3><br/></#if>
                     <a href="${bookmark.url}" target="_blank" title="${bookmark.name}">${bookmark.name}</a>
+                    <#if (bookmark_index + 1) % 3 == 0 ><br/></#if>
                 </#list>
             </li>
         </ul>

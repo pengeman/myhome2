@@ -18,6 +18,9 @@
 
     <insert id="saveBookMark" parameterClass="BookMark">
         insert into cc(name,url) values(#name#, #url#)
+        <selectKey resultClass="int" keyProperty="id" >
+            select seq as value from sqlite_sequence;
+        </selectKey>
     </insert>
 
     <insert id="insertver" parameterClass="int">

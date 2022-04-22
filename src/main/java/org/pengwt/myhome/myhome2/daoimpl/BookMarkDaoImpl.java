@@ -31,8 +31,7 @@ public class BookMarkDaoImpl implements BookMarkDao {
 
 
     /**
-     * see {@link com.ibatis.sqlmap.engine.builder.xml.SqlMapConfigParser#addGlobalPropNodelets() }
-     */
+       */
     public SqlMapClient getSqlMapClient() {
         try {
             val properties = new Properties();
