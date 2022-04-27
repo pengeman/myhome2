@@ -4,7 +4,7 @@ on:
     branches:
       - release
 jobs:
-  build:
+  job_build:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -17,16 +17,28 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package -Dmaven.test.skip=true -T4
-
-
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@master
+      - run: pwd && ls -lR
+      #  job_deploy:
+      #    needs: job_build
+      #    using: "composite"
+      #    steps:
+      #      - name: scp
+      #        uses: garygrossgarten/github-action-scp@release
+      #        with:
+      #          host: ${{ secrets.DEPLOY_HOST }}
+      #          username: ${{ secrets.USERNAME }}
+      #          password: ${{ secrets.PASSWORD }}
+      #          local: ./target/myhome2-0.0.1-SNAPSHOT.jar
+      #          remote: "~/APP/myhome2/"
+      - uses: marcodallasanta/ssh-scp-deploy@v1.2.0
         with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          source: "target/myhome2-0.0.1-SNAPSHOT.jar"
-          target: "~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar"
+          local: './target/myhome2-0.0.1-SNAPSHOT.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
+          remote: '~/APP/myhome2/'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
+          host: ${{secrets.DEPLOY_HOST}}                                      # Remote server address - REQUIRED true
+          user: ${{secrets.USERNAME}}                                      # Remote server user - REQUIRED true
+          password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
+#          ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+          scp_options: -v                                              # Flags to use during scp - REQUIRED false - DEFAULT ''
 
       - name: ssh run
         uses: appleboy/ssh-action@v0.1.4
@@ -38,7 +50,7 @@ jobs:
           password: ${PASSWORD}
           script: |
             ~/bin/supervisorctl.sh restart myhome2 
-            
+
 
       - name: send telegram message on success
         if: success()
