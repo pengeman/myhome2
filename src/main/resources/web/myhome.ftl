@@ -34,7 +34,7 @@ title,
 <!-- 百度搜索 -->
 <form action="https://www.baidu.com/s" method="get" target="_blank" id="form1"  >
     <div>
-        <a href="https://www.baidu.com/" id="s1" style="display: block"><img src="image/baidu.jpeg" class="cpic" ></a>
+        <a href="https://www.baidu.com/" id="s1" style="display: block"><img src="image/baidu2.png" class="cpic" ></a>
         <a href="https://www4.bing.com/" id="s2" style="display: none"><img src="image/binglog.jpeg" class="cpic" ></a>
         <a href="https://www.google.com/" id="s3" style="display: none"><img src="image/google.png" class="cpic" ></a>
 <a href="gosetup" class="right">SETUP</a>
