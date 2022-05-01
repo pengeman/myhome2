@@ -39,12 +39,42 @@ jobs:
 #          password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
 ##          ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
 #          scp_options: -v                                              # Flags to use during scp - REQUIRED false - DEFAULT ''
-      - name: scp
-        run: |
-          sudo apt install sshpass 
-          sshpass -p ${{secrets.PASSWORD}} scp -o StrictHostKeyChecking=no ./target/myhome2-0.0.1-SNAPSHOT.jar \
-            ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new
+#      - name: scp
+#        run: |
+#          sudo apt install sshpass
+#          sshpass -p ${{secrets.PASSWORD}} scp -o StrictHostKeyChecking=no ./target/myhome2-0.0.1-SNAPSHOT.jar \
+#            ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new
 
+
+
+      - name: Delete older releases
+          uses: dev-drprasad/delete-older-releases@v0.2.0
+          with:
+            #          repo: <owner>/<repoName> # defaults to current repo
+            keep_latest: 0
+          #          delete_tag_pattern: beta # defaults to ""
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: myhome2-0.0.1-SNAPSHOT.jar
+          release_name: myhome2-0.0.1-SNAPSHOT.jar
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./target/myhome2-0.0.1-SNAPSHOT.jar
+          asset_name: myhome2-0.0.1-SNAPSHOT.jar
 
       - name: ssh run
         uses: appleboy/ssh-action@v0.1.4
