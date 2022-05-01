@@ -30,15 +30,19 @@ jobs:
       #          password: ${{ secrets.PASSWORD }}
       #          local: ./target/myhome2-0.0.1-SNAPSHOT.jar
       #          remote: "~/APP/myhome2/"
-      - uses: marcodallasanta/ssh-scp-deploy@v1.2.0
-        with:
-          local: './target/myhome2-0.0.1-SNAPSHOT.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
-          remote: '~/APP/myhome2/'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
-          host: ${{secrets.DEPLOY_HOST}}                                      # Remote server address - REQUIRED true
-          user: ${{secrets.USERNAME}}                                      # Remote server user - REQUIRED true
-          password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
-#          ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-          scp_options: -v                                              # Flags to use during scp - REQUIRED false - DEFAULT ''
+#      - uses: marcodallasanta/ssh-scp-deploy@v1.2.0
+#        with:
+#          local: './target/myhome2-0.0.1-SNAPSHOT.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
+#          remote: '~/APP/myhome2/'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
+#          host: ${{secrets.DEPLOY_HOST}}                                      # Remote server address - REQUIRED true
+#          user: ${{secrets.USERNAME}}                                      # Remote server user - REQUIRED true
+#          password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
+##          ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+#          scp_options: -v                                              # Flags to use during scp - REQUIRED false - DEFAULT ''
+      - run: |
+          sudo apt install sshpass
+          sshpass -p ${{secrets.PASSWORD}} scp './target/myhome2-0.0.1-SNAPSHOT.jar' ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:'~/APP/myhome2/'
+
 
       - name: ssh run
         uses: appleboy/ssh-action@v0.1.4
