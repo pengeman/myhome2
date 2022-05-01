@@ -12,7 +12,7 @@ http://myhome.sucicada.cf/myhome
 |          |                            |
 |----------|----------------------------|
 | release: | 正式发布, 用于GitHub Action 自动构建 | 
-| dev:     | 开发                         |
+| main:    | 开发                         |
 
 ### how to build
 
