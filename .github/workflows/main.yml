@@ -30,26 +30,65 @@ jobs:
       #          password: ${{ secrets.PASSWORD }}
       #          local: ./target/myhome2-0.0.1-SNAPSHOT.jar
       #          remote: "~/APP/myhome2/"
-      - uses: marcodallasanta/ssh-scp-deploy@v1.2.0
+#      - uses: marcodallasanta/ssh-scp-deploy@v1.2.0
+#        with:
+#          local: './target/myhome2-0.0.1-SNAPSHOT.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
+#          remote: '~/APP/myhome2/'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
+#          host: ${{secrets.DEPLOY_HOST}}                                      # Remote server address - REQUIRED true
+#          user: ${{secrets.USERNAME}}                                      # Remote server user - REQUIRED true
+#          password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
+##          ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+#          scp_options: -v                                              # Flags to use during scp - REQUIRED false - DEFAULT ''
+#      - name: scp
+#        run: |
+#          sudo apt install sshpass
+#          sshpass -p ${{secrets.PASSWORD}} scp -o StrictHostKeyChecking=no ./target/myhome2-0.0.1-SNAPSHOT.jar \
+#            ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new
+
+
+
+      - name: Delete older release
+        uses: dev-drprasad/delete-older-releases@v0.2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          local: './target/myhome2-0.0.1-SNAPSHOT.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
-          remote: '~/APP/myhome2/'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
-          host: ${{secrets.DEPLOY_HOST}}                                      # Remote server address - REQUIRED true
-          user: ${{secrets.USERNAME}}                                      # Remote server user - REQUIRED true
-          password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
-#          ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-          scp_options: -v                                              # Flags to use during scp - REQUIRED false - DEFAULT ''
+          keep_latest: 0
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: myhome2-0.0.1-SNAPSHOT.jar
+          release_name: myhome2-0.0.1-SNAPSHOT.jar
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./target/myhome2-0.0.1-SNAPSHOT.jar
+          asset_name: myhome2-0.0.1-SNAPSHOT.jar
+          asset_content_type: application/zip
 
       - name: ssh run
         uses: appleboy/ssh-action@v0.1.4
-        env:
-          PASSWORD: ${{ secrets.PASSWORD }}
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${PASSWORD}
+          password: ${{ secrets.PASSWORD }}
           script: |
-            ~/bin/supervisorctl.sh restart myhome2 
+            export http_proxy=http://localhost:7890
+            export https_proxy=http://localhost:7890
+            export all_proxy=http://localhost:7890
+            wget https://github.com/${{github.repository}}/releases/download/myhome2-0.0.1-SNAPSHOT.jar/myhome2-0.0.1-SNAPSHOT.jar -O ~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new 
+            mv ~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new ~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar
+            ~/bin/supervisorctl.sh restart myhome2
 
 
       - name: send telegram message on success
