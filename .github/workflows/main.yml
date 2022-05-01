@@ -47,14 +47,13 @@ jobs:
 
 
 
-      - name: Delete older releases
-          uses: dev-drprasad/delete-older-releases@v0.2.0
-          with:
-            #          repo: <owner>/<repoName> # defaults to current repo
-            keep_latest: 0
-          #          delete_tag_pattern: beta # defaults to ""
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Delete older release
+        uses: dev-drprasad/delete-older-releases@v0.2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          keep_latest: 0
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
