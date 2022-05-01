@@ -42,7 +42,8 @@ jobs:
       - name: scp
         run: |
           sudo apt install sshpass 
-          sshpass -p ${{secrets.PASSWORD}} scp -o StrictHostKeyChecking=no ./target/myhome2-0.0.1-SNAPSHOT.jar ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:~/APP/myhome2/
+          sshpass -p ${{secrets.PASSWORD}} scp -o StrictHostKeyChecking=no ./target/myhome2-0.0.1-SNAPSHOT.jar \
+            ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new
 
 
       - name: ssh run
@@ -54,6 +55,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${PASSWORD}
           script: |
+            mv ~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new ~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar
             ~/bin/supervisorctl.sh restart myhome2 
 
 
