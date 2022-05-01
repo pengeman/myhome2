@@ -41,8 +41,8 @@ jobs:
 #          scp_options: -v                                              # Flags to use during scp - REQUIRED false - DEFAULT ''
       - name: scp
         run: |
-          sudo apt install sshpass && 
-          sshpass -p ${{secrets.PASSWORD}} scp ./target/myhome2-0.0.1-SNAPSHOT.jar ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:~/APP/myhome2/
+          sudo apt install sshpass 
+          sshpass -p ${{secrets.PASSWORD}} scp -o StrictHostKeyChecking=no ./target/myhome2-0.0.1-SNAPSHOT.jar ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:~/APP/myhome2/
 
 
       - name: ssh run
