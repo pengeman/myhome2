@@ -39,9 +39,10 @@ jobs:
 #          password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
 ##          ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
 #          scp_options: -v                                              # Flags to use during scp - REQUIRED false - DEFAULT ''
-      - run: |
+      - name: scp
+        run: |
           sudo apt install sshpass
-          sshpass -p ${{secrets.PASSWORD}} scp './target/myhome2-0.0.1-SNAPSHOT.jar' ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:'~/APP/myhome2/'
+          sshpass -p ${{secrets.PASSWORD}} scp ./target/myhome2-0.0.1-SNAPSHOT.jar ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:~/APP/myhome2/
 
 
       - name: ssh run
