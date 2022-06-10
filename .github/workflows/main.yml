@@ -86,6 +86,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
+            set -e 
             mkdir -p ~/APP/myhome2
             source ~/.bashrc && \
             source suproxy v2ray && \
