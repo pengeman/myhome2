@@ -17,7 +17,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package -Dmaven.test.skip=true -T4
-      - run: pwd && ls -lR
+#      - run: pwd && ls -lR
       #  job_deploy:
       #    needs: job_build
       #    using: "composite"
@@ -30,23 +30,26 @@ jobs:
       #          password: ${{ secrets.PASSWORD }}
       #          local: ./target/myhome2-0.0.1-SNAPSHOT.jar
       #          remote: "~/APP/myhome2/"
-#      - uses: marcodallasanta/ssh-scp-deploy@v1.2.0
-#        with:
+      - uses: marcodallasanta/ssh-scp-deploy@v1.2.0
+        with:
 #          local: './target/myhome2-0.0.1-SNAPSHOT.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
 #          remote: '~/APP/myhome2/'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
-#          host: ${{secrets.DEPLOY_HOST}}                                      # Remote server address - REQUIRED true
-#          user: ${{secrets.USERNAME}}                                      # Remote server user - REQUIRED true
-#          password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
-##          ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-#          scp_options: -v                                              # Flags to use during scp - REQUIRED false - DEFAULT ''
-#      - name: scp
-#        run: |
-#          sudo apt install sshpass
-#          sshpass -p ${{secrets.PASSWORD}} scp -o StrictHostKeyChecking=no ./target/myhome2-0.0.1-SNAPSHOT.jar \
-#            ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new
+          local: './deploy/myhome2.ini'
+          remote: '/home/peng/etc/supervisor/conf.d/'
+          host: ${{secrets.DEPLOY_HOST}}                                      # Remote server address - REQUIRED true
+          user: ${{secrets.USERNAME}}                                      # Remote server user - REQUIRED true
+          password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
+          pre_upload: mkdir -p ~/APP/myhome2/
+          scp_options: -vvvv                                              # Flags to use during scp - REQUIRED false - DEFAULT ''
+#                    ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+      #      - name: scp
+      #        run: |
+      #          sudo apt install sshpass
+      #          sshpass -p ${{secrets.PASSWORD}} scp -o StrictHostKeyChecking=no ./target/myhome2-0.0.1-SNAPSHOT.jar \
+      #            ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new
 
 
-
+#     之所以兜这么大一个圈子， 是因为 github action 拷贝到内陆机器，速度十分十分慢
       - name: Delete older release
         uses: dev-drprasad/delete-older-releases@v0.2.0
         env:
@@ -83,12 +86,17 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            export http_proxy=http://localhost:7890
-            export https_proxy=http://localhost:7890
-            export all_proxy=http://localhost:7890
-            wget https://github.com/${{github.repository}}/releases/download/myhome2-0.0.1-SNAPSHOT.jar/myhome2-0.0.1-SNAPSHOT.jar -O ~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new 
+            mkdir -p ~/APP/myhome2
+            source ~/.bashrc && \
+            source suproxy v2ray && \
+            env | grep proxy &&  \
+            wget https://github.com/${{github.repository}}/releases/download/myhome2-0.0.1-SNAPSHOT.jar/myhome2-0.0.1-SNAPSHOT.jar -O ~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new
             mv ~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new ~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar
+            ~/bin/supervisorctl.sh update
             ~/bin/supervisorctl.sh restart myhome2
+            #            export http_proxy=http://localhost:7890
+            #            export https_proxy=http://localhost:7890
+            #            export all_proxy=http://localhost:7890
 
 
       - name: send telegram message on success
