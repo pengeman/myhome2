@@ -56,11 +56,11 @@ title,
     <div class="box_cnt sstool">
         <ul>
             <li>
-                <a href="http://tools.2345.com/lieche.htm" target="_blank">火车时刻</a>
+                <a href="http://huoche.youabc.cn/" target="_blank" title="在途网">火车时刻</a>
                 <a href="http://tools.2345.com/changtu.htm?0" target="_blank">长途客运</a>
                 <a href="http://tools.2345.com/bus.htm" target="_blank">公交线路</a>
                 <br />
-                <a href="http://tools.2345.com/weizhang.htm" target="_blank">交通违章</a>
+                <a href="http://tools.2345.com/weizhang.htm" target="_blank">交通违章</a>ho
                 <a href="http://tools.2345.com/carlist.htm" target="_blank">查车牌号</a>
                 <a href="http://tools.2345.com/kaojia.htm" target="_blank">考驾查询</a>
                 <br />
