@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>#title</title>
+    <meta name="description" content="使用freemark模板制作网页">
 </head>
 <body>
 <form action="dosetup" method="post">
