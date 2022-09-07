@@ -39,7 +39,7 @@ public class NewMan {
     第一次运行, 做初始设置, 创建数据库文件目录,创建数据库链接文件及参数
      */
     public void firstone(int ver) {
-        // 第一运行时执行，返回1
+        // 第一次运行时执行，返回1
         File file_url = new File(DATA_DIR);
         File file_db = new File(DATA_DIR + FILE_DB);
         log.info("file_url: {}", file_url);
@@ -48,12 +48,12 @@ public class NewMan {
             if (!file_url.exists()) {
                 file_url.mkdirs();
                 log.info("mkdirs {}", file_url);
-//                file_db.createNewFile();
-//                createSqlConfig();
+                file_db.createNewFile();
+                createSqlConfig();
             }
 
             if (!file_db.exists()) {
-//                file_db.createNewFile();
+                file_db.createNewFile();
                 createDB(ver);
                 log.info("createNewFile {}", file_url);
             }

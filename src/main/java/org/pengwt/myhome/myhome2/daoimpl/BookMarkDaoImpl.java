@@ -33,6 +33,7 @@ public class BookMarkDaoImpl implements BookMarkDao {
     /**
        */
     public SqlMapClient getSqlMapClient() {
+        // todo : getSqlMapClient
         try {
             val properties = new Properties();
             val sqlMapConfigUrl = new File(NewMan.getSqlConfigPath()).toURI().toString();
@@ -42,6 +43,7 @@ public class BookMarkDaoImpl implements BookMarkDao {
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
+
         }
     }
 
