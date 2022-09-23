@@ -19,7 +19,7 @@ title,
         .datetable thead td{padding:10px 5px;font:normal 12px/normal 'microsoft yahei';color:#fff;text-align:center;}
         .datetable thead td span{padding:0 5px;}
         .datetable tbody td{padding:5px 3px;font-size:12px;}
-        .cpic {max-width: 100px; max-height: 40px;}
+        .cpic {width: 100px; height: 40px;}
 
     </style>
 <style type="text/css">
@@ -41,9 +41,9 @@ title,
         <input type="text" name="word" id="word" style="width:500px;height:30px;background-color: #FDD6DC">
         <input type="submit" class="ss_btn" id="search_btn" style="width:40px;height:30px;background-color:#FDD6DC"  value="搜 索">
         <input type="button" value="clear" onclick="javascript:cls();"><br/>
-        <input type="radio" id = "r1" name="x" value=" " onclick="radioClicked(1)" checked="checked">百度
-        <input type="radio"  id = "r2" name="x" value=" " onclick="radioClicked(2)">比应
-        <input type="radio"  id = "r3" name="x" value=" " onclick="radioClicked(3)">谷歌
+        <input type="radio" id = "r1"  name="x" value=" " onclick="radioClicked(1)" checked="checked"><label for="r1">百度</label>
+        <input type="radio"  id = "r2" name="x" value=" " onclick="radioClicked(2)"><label for="r2">Bing</label>
+        <input type="radio"  id = "r3" name="x" value=" " onclick="radioClicked(3)"><label for="r3">Google</label>
     </div>
 </form>
 <!-- 百度搜索 end -->

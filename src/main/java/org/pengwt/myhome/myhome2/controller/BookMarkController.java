@@ -58,7 +58,7 @@ public class BookMarkController {
         md.addObject("title", "setup myhome");
         md.addObject("rows", bookMarks);
 //        md.setViewName("setupnew");
-        md.setViewName("setupnew2.html");
+        md.setViewName("setupnew2");
         return md;
     }
 
