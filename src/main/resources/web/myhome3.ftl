@@ -68,7 +68,11 @@
         </h4>
     </div>
 </div>
-
+<select name="SY" onchange="changeCld();" style="font-SIZE: 9pt">
+    <script type="text/javascript">
+        for(i=1900;i < 2050;i++) document.write('<option>'+i + '</option>');
+    </script>
+</select><span>年</span>
 <form name="CLD" class="content">
     <h2>万年历</h2>
     <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datetable">
@@ -76,8 +80,8 @@
         <tr>
             <td colSpan=7><span>公历</span>
                 <select name="SY" onchange="changeCld();" style="font-SIZE: 9pt">
-                    <script>
-                        for(i=1900;i  2050;i++) document.write('<option>'+i + '</option>');
+                    <script type="text/javascript">
+                        for(i=1900;i < 2050;i++) document.write('<option>'+i + '</option>');
                     </script>
                 </select><span>年</span>
                 <select name="SM" onchange="changeCld();" style="font-SIZE: 9pt">

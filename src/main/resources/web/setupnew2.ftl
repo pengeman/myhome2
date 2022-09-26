@@ -76,14 +76,19 @@
     var bks = new Vue({  // 所有数据库中的bookmark列表
         el:"#bookmarklist",
         data:{
-            // bookmarks:[{"id":1,"name":"163","url":"www.163.com"},{"id":2,"name":"163","url":"www.163.com"}]
-            bookmarks:['']
+            //bks:[{"id":1,"name":"163","url":"www.163.com"},{"id":2,"name":"163","url":"www.163.com"}],
+            bookmarks:[{}]
         },
         created : function (){
+            this.bookmarks=[{"id":1,"name":"163","url":"a111111"},{"id":2,"name":"163","url":"b222222"}];
+            var bk2;
             $.ajax({
                 url: "allbookmarks",
                 success: function (result) {
-                    vm.bookmarks = result;
+                    alert(result);
+                    bks.bookmarks = result;
+                    console.log('bookmarks:',this.bookmarks);
+                    bk2 = result;
                 }
             });
         }

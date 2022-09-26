@@ -113,7 +113,7 @@ title,
             <td colSpan=7><span>公历</span>
                 <select name="SY" onchange="changeCld();" style="font-SIZE: 9pt">
                     <script>
-                        for(i=1900;i  2050;i++) document.write('<option>'+i + '</option>');
+                        for(i=1900;i<2050;i++) document.write('<option>'+i + '</option>');
                     </script>
                 </select><span>年</span>
                 <select name="SM" onchange="changeCld();" style="font-SIZE: 9pt">
