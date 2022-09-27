@@ -67,7 +67,8 @@ public class BookMarkController {
     public String dosetup(@RequestParam(name="name") String name , @RequestParam(name="url") String url){
         BookMark bookMark = new BookMark(name,url);
         boolean r = this.bookMarkService.saveBookMark(bookMark);
-        return "新增书签 成功" + r;
+        String s = "新增书签 成功" + r;
+        return JSON.toJSONString(s);
     }
     @RequestMapping(value = "/test")
     public ModelAndView HelloTest(ModelAndView m) {

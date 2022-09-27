@@ -6,54 +6,41 @@
     <title>#title</title>
     <meta name="description" content="使用vue.js+freemark制作网页">
     <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
-    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <#--    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>-->
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
-<#--<form action="dosetup" method="post">-->
-<#--    名称：<input type="text" name="name"/><br/>-->
-<#--    地址：<input type="text" name="url"/><br/>-->
-<#--    <input type="submit" value="提交"/>-->
-<#--</form>-->
+
 <hr/>
 <div id="dosetup">
     名称：<input id="name" type="text" v-model="name" placeholder="网站名称">
-    地址：<input type="text" name="url" placeholder="网站url"/>
+    地址：<input type="text" v-model="url" placeholder="网站url"/>
     <button v-on:click="dosetup">提交</button>
-    <textarea rows="3" cols="11" v-model="bookmark"></textarea>
 </div>
-<hr/>
-<table border="1">
-    <tr>
-        <td>名称</td>
-        <td>链接</td>
-    </tr>
-    <div id="bookmarks">
-        <table>
-            <template v-for="book in books">
-                <tr>
-                    <td>book.name</td>
-                    <td>book.url</td>
-                </tr>
-            </template>
-        </table>
-    </div>
 
-
-</table>
 <hr/>
 <div id="bookmarklist"> <#--    bookmark列表-->
-    <li v-for="row in bookmarks">
-        {{row.name}}--{{row.url}}<br/>
-    </li>
+    <table border="1">
+        <tr>
+            <td>名称</td>
+            <td>链接</td>
+        </tr>
+        <tr v-for="row in bookmarks">
+            <td>{{row.name}}</td>
+            <td>{{row.url}}</td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>
+
+
 <script type="text/javascript">
     var vm = new Vue({
         el: "#dosetup",
         data: {
-            bookmark: 'ee3'
+            name: '',
+            url: ''
         },
         methods: {
             // dosetup1: function () {
@@ -64,33 +51,56 @@
             //         });
             // },
             dosetup(event) {
+                // todo : 提交新记录
                 $.ajax({
-                    url: "allbookmarks", success: function (result) {
-                        vm.bookmark = result;
+                    type: "POST",
+                    url: "dosetup",
+                    data: "name=" + this.name + "&url=" + this.url,
+                    dataType: "string",
+                    success: function (data, status) {
+                        // console.log("result=" + data + status);
+                        alert("result:");
+                        // todo   刷新页面
+                        let that = this
+
+                        $.ajax({
+                            type: "GET",
+                            url: "allbookmarks",
+                            success: function (result) {
+                                that.bookmarks = JSON.parse(result);
+                            }
+                        });
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(textStatus);
+                        console.log("error: " + XMLHttpRequest + textStatus)
                     }
                 });
+
+
             }
         }
     });
 
     var bks = new Vue({  // 所有数据库中的bookmark列表
-        el:"#bookmarklist",
-        data:{
+        el: "#bookmarklist",
+        data: {
             //bks:[{"id":1,"name":"163","url":"www.163.com"},{"id":2,"name":"163","url":"www.163.com"}],
-            bookmarks:[{}]
+            bookmarks: [
+                {}
+            ]
         },
-        created : function (){
-            this.bookmarks=[{"id":1,"name":"163","url":"a111111"},{"id":2,"name":"163","url":"b222222"}];
-            var bk2;
+        created: function () {
+            let that = this
+
             $.ajax({
                 url: "allbookmarks",
                 success: function (result) {
-                    alert(result);
-                    bks.bookmarks = result;
-                    console.log('bookmarks:',this.bookmarks);
-                    bk2 = result;
+                    that.bookmarks = JSON.parse(result);
                 }
             });
         }
     });
+
+
 </script>
