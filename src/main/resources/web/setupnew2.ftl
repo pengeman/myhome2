@@ -51,28 +51,32 @@
             //         });
             // },
             dosetup(event) {
+                let that = this
+
                 // todo : 提交新记录
                 $.ajax({
                     type: "POST",
                     url: "dosetup",
                     data: "name=" + this.name + "&url=" + this.url,
-                    dataType: "string",
+                    dataType: "text",
                     success: function (data, status) {
                         // console.log("result=" + data + status);
                         alert("result:");
                         // todo   刷新页面
-                        let that = this
 
                         $.ajax({
                             type: "GET",
                             url: "allbookmarks",
                             success: function (result) {
-                                that.bookmarks = JSON.parse(result);
+                                bks.bookmarks = JSON.parse(result);
+
+                                console.log(result)
                             }
                         });
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         alert(textStatus);
+                        console.log(errorThrown)
                         console.log("error: " + XMLHttpRequest + textStatus)
                     }
                 });

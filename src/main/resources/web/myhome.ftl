@@ -61,7 +61,7 @@ title,
                 <a href="http://tools.2345.com/bus.htm" target="_blank">公交线路</a>
                 <br />
                 <a href="http://tools.2345.com/weizhang.htm" target="_blank">交通违章</a>ho
-                <a href="http://tools.2345.com/carlist.htm" target="_blank">查车牌号</a>
+                <a href="https://www.4399.com/" target="_blank"> 小游戏 </a>
                 <a href="http://tools.2345.com/kaojia.htm" target="_blank">考驾查询</a>
                 <br />
                 <a href="http://tools.2345.com/shouji.htm" target="_blank">手机归属</a>
@@ -80,17 +80,20 @@ title,
                 <a href="http://tools.2345.com/lilv.htm" target="_blank">银行利率</a>
                 <a href="http://sucicada.cf:800/" target="_blank">sucicada</a>
                 <br />
-                <a href="http://fanyi.youdao.com/" target="_blank">在线翻译</a>
-                <a href="http://tools.2345.com/zidcd.htm" target="_blank">新华字典</a>
+                <a href="http://dict.youdao.com/" target="_blank">在线字典</a>
+                <a href="http://zidian.aies.cn/" target="_blank">新华字典</a>
                 <a href="http://tools.2345.com/jishunqi.htm" target="_blank">在线计算</a>
                 <br />
-                <a href="http://my.2345.com/member/edit_info.php" target="_blank">我的工具</a>
+                <a href="http://www.360doc.com/myindex.aspx" target="_blank">我的图书馆</a>
                 <a href="http://blog.chinaunix.net/" title="chinaunix" target="_blank">我的博客</a>
                 <a href="http://www.xnote.cn/note/category/" title="xnote" target="_blank">在线笔记</a>
                 <br/>
                 <a href="https://www.speedtest.cn" title="speedtest" target="_blank" >在线测速</a>
                 <a href="https://www.cnblogs.com/" title="cnblogs" target="_blank">我的博客</a>
                 <a href="https://home.zoho.com.cn/home" target="_blank">zoho笔记</a><br/>
+                <br/>
+                <a href="https://mvnrepository.com/" target="_blank">mvn仓库</a>
+                <a href="https://filehelper.weixin.qq.com/" title="微信的文件传输" target="_blank">文件传输</a>
                 <#list rows as bookmark >
                     <a href="${bookmark.url}" target="_blank" title="${bookmark.name}">${bookmark.name}</a>
                     <#if (bookmark_index + 1) % 3 == 0 ><br/></#if>

@@ -29,15 +29,10 @@ public class BookMarkController {
     @GetMapping(value = "/myhome")
     public ModelAndView showBookMarks(ModelAndView modelAndView) {
         List<BookMark> bms = bookMarkService.getAllBookMarks();
-//        String jsonString = JSON.toJSONString(bms);
-//        //System.out.println(jsonString);
 //        log.debug(jsonString);
-        //写freemarker
+        // todo 写freemarker
         modelAndView.addObject("title", "myhome");
         modelAndView.addObject("rows", bms);
-//        for (BookMark bookMark : bms){
-//            modelAndView.addObject("rows", bookMark);
-//        }
         modelAndView.setViewName("myhome");
         return modelAndView;
     }
