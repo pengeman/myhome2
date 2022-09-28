@@ -48,17 +48,18 @@ public class NewMan {
             if (!file_url.exists()) {
                 file_url.mkdirs();
                 log.info("mkdirs {}", file_url);
-                file_db.createNewFile();
-                createSqlConfig();
+                //file_db.createNewFile();
+                //createSqlConfig();
             }
 
             if (!file_db.exists()) {
-                file_db.createNewFile();
+                //file_db.createNewFile();
                 createDB(ver);
+                createSqlConfig();
                 log.info("createNewFile {}", file_url);
             }
 
-            createSqlConfig();
+            //createSqlConfig();
         } catch (Exception e) {
             log.error("firstone error", e);
             throw new RuntimeException(e);

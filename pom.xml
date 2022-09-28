@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>org.pengwt.myhome</groupId>
 	<artifactId>myhome2</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.2</version>
 	<name>myhome2</name>
 	<description>myhome2</description>
 	<properties>
