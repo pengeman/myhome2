@@ -87,9 +87,9 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             mkdir -p ~/APP/myhome2
-            source ~/.bashrc && \
-            source suproxy v2ray && \
-            env | grep proxy &&  \
+#            source ~/.bashrc && \
+#            source suproxy v2ray && \
+#            env | grep proxy &&  \
             wget https://github.com/${{github.repository}}/releases/download/myhome2.jar/myhome2.jar -O ~/APP/myhome2/myhome2.jar.new
             mv ~/APP/myhome2/myhome2.jar.new ~/APP/myhome2/myhome2.jar
             ~/bin/supervisorctl.sh update
