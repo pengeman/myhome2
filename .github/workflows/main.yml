@@ -87,13 +87,13 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             mkdir -p ~/APP/myhome2
-#            source ~/.bashrc && \
-#            source suproxy v2ray && \
-#            env | grep proxy &&  \
             wget https://github.com/${{github.repository}}/releases/download/myhome2.jar/myhome2.jar -O ~/APP/myhome2/myhome2.jar.new
             mv ~/APP/myhome2/myhome2.jar.new ~/APP/myhome2/myhome2.jar
             ~/bin/supervisorctl.sh update
             ~/bin/supervisorctl.sh restart myhome2
+#            source ~/.bashrc && \
+#            source suproxy v2ray && \
+#            env | grep proxy &&  \
             #            export http_proxy=http://localhost:7890
             #            export https_proxy=http://localhost:7890
             #            export all_proxy=http://localhost:7890
