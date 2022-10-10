@@ -145,6 +145,7 @@
 	</repositories>
 
 	<build>
+		<finalName>${artifact}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
