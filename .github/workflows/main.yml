@@ -86,6 +86,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
+            set -e 
             mkdir -p ~/APP/myhome2
             wget https://github.com/${{github.repository}}/releases/download/myhome2.jar/myhome2.jar -O ~/APP/myhome2/myhome2.jar.new
             mv ~/APP/myhome2/myhome2.jar.new ~/APP/myhome2/myhome2.jar
