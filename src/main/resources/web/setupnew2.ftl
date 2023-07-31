@@ -83,6 +83,7 @@
             $.ajax({
                 url: "allbookmarks",
                 success: function (result) {
+                    console.log(result);
                     vm.bookmarks = result;
                 }
             });

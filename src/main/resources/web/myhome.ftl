@@ -60,7 +60,7 @@ title,
                 <a href="http://tools.2345.com/changtu.htm?0" target="_blank">长途客运</a>
                 <a href="http://tools.2345.com/bus.htm" target="_blank">公交线路</a>
                 <br />
-                <a href="http://tools.2345.com/weizhang.htm" target="_blank">交通违章</a>ho
+                <a href="http://tools.2345.com/weizhang.htm" target="_blank">交通违章</a>
                 <a href="http://tools.2345.com/carlist.htm" target="_blank">查车牌号</a>
                 <a href="http://tools.2345.com/kaojia.htm" target="_blank">考驾查询</a>
                 <br />
@@ -113,7 +113,7 @@ title,
             <td colSpan=7><span>公历</span>
                 <select name="SY" onchange="changeCld();" style="font-SIZE: 9pt">
                     <script>
-                        for(i=1900;i  2050;i++) document.write('<option>'+i + '</option>');
+                        for(i=1900;i<=2050;i++) document.write('<option>'+i + '</option>');
                     </script>
                 </select><span>年</span>
                 <select name="SM" onchange="changeCld();" style="font-SIZE: 9pt">

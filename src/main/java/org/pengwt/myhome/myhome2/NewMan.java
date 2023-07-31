@@ -48,20 +48,31 @@ public class NewMan {
             if (!file_url.exists()) {
                 file_url.mkdirs();
                 log.info("mkdirs {}", file_url);
-                file_db.createNewFile();
-                createSqlConfig();
-            }
-
-            if (!file_db.exists()) {
-                file_db.createNewFile();
+                //file_db.createNewFile();
                 createDB(ver);
-                log.info("createNewFile {}", file_url);
+                createSqlConfig(ver);
+            }else {
+                int oldver = checkver(ver);
+                if (ver > oldver){
+                    createSqlConfig(ver);
+                }
             }
-
-            createSqlConfig();
         } catch (Exception e) {
             log.error("firstone error", e);
             throw new RuntimeException(e);
+        }
+    }
+
+    private int checkver(int ver) {
+        String templateSqlconfig = "mapper/SqlMap.properties";
+        try {
+            Properties pps = Resources.getResourceAsProperties(templateSqlconfig);
+            String v = pps.getProperty("ver");
+            if (v == null ) v = "0";
+            return Integer.parseInt(v);
+        } catch (IOException e) {
+            System.out.println(e);
+            return 0;
         }
     }
 
@@ -75,7 +86,7 @@ public class NewMan {
     }
 
     //编辑sqlconfig文件
-    private void createSqlConfig() throws IOException {
+    private void createSqlConfig(int ver) throws IOException {
         // 模板
         String templateSqlconfig = "mapper/SqlMap.properties";
         String driver = "org.sqlite.JDBC";
@@ -93,6 +104,7 @@ public class NewMan {
         pps.setProperty("url", url);
         pps.setProperty("username", username);
         pps.setProperty("password", password);
+        pps.setProperty("ver",ver+"");
 
         //以适合使用 load 方法加载到 Properties 表中的格式，
         //将此 Properties 表中的属性列表（键和元素对）写入输出流
