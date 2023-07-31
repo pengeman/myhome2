@@ -56,7 +56,7 @@ public class BookMarkDaoImpl implements BookMarkDao {
         boolean flag = false;
         try {
             object = sqlMapClient.insert("saveBookMark", bookMark);
-            System.out.println("添加bookmark信息的返回值：" + object);
+            //System.out.println("添加bookmark信息的返回值：" + object);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -32,7 +32,7 @@ jobs:
       #          remote: "~/APP/myhome2/"
       - uses: marcodallasanta/ssh-scp-deploy@v1.2.0
         with:
-#          local: './target/myhome2-0.0.1-SNAPSHOT.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
+#          local: './target/myhome2.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
 #          remote: '~/APP/myhome2/'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
           local: './deploy/myhome2.ini'
           remote: '/home/peng/etc/supervisor/conf.d/'
@@ -63,8 +63,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: myhome2-0.0.1-SNAPSHOT.jar
-          release_name: myhome2-0.0.1-SNAPSHOT.jar
+          tag_name: myhome2.jar
+          release_name: myhome2.jar
           draft: false
           prerelease: false
 
@@ -75,8 +75,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./target/myhome2-0.0.1-SNAPSHOT.jar
-          asset_name: myhome2-0.0.1-SNAPSHOT.jar
+          asset_path: ./target/myhome2.jar
+          asset_name: myhome2.jar
           asset_content_type: application/zip
 
       - name: ssh run
@@ -86,14 +86,15 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
+            set -e 
             mkdir -p ~/APP/myhome2
-            source ~/.bashrc && \
-            source suproxy v2ray && \
-            env | grep proxy &&  \
-            wget https://github.com/${{github.repository}}/releases/download/myhome2-0.0.1-SNAPSHOT.jar/myhome2-0.0.1-SNAPSHOT.jar -O ~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new
-            mv ~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new ~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar
+            wget https://github.com/${{github.repository}}/releases/download/myhome2.jar/myhome2.jar -O ~/APP/myhome2/myhome2.jar.new
+            mv ~/APP/myhome2/myhome2.jar.new ~/APP/myhome2/myhome2.jar
             ~/bin/supervisorctl.sh update
             ~/bin/supervisorctl.sh restart myhome2
+#            source ~/.bashrc && \
+#            source suproxy v2ray && \
+#            env | grep proxy &&  \
             #            export http_proxy=http://localhost:7890
             #            export https_proxy=http://localhost:7890
             #            export all_proxy=http://localhost:7890

@@ -29,15 +29,10 @@ public class BookMarkController {
     @GetMapping(value = "/myhome")
     public ModelAndView showBookMarks(ModelAndView modelAndView) {
         List<BookMark> bms = bookMarkService.getAllBookMarks();
-//        String jsonString = JSON.toJSONString(bms);
-//        //System.out.println(jsonString);
 //        log.debug(jsonString);
-        //写freemarker
+        // todo 写freemarker
         modelAndView.addObject("title", "myhome");
         modelAndView.addObject("rows", bms);
-//        for (BookMark bookMark : bms){
-//            modelAndView.addObject("rows", bookMark);
-//        }
         modelAndView.setViewName("myhome");
         return modelAndView;
     }
@@ -67,7 +62,8 @@ public class BookMarkController {
     public String dosetup(@RequestParam(name="name") String name , @RequestParam(name="url") String url){
         BookMark bookMark = new BookMark(name,url);
         boolean r = this.bookMarkService.saveBookMark(bookMark);
-        return "新增书签 成功" + r;
+        String s = "新增书签 成功" + r;
+        return JSON.toJSONString(s);
     }
     @RequestMapping(value = "/test")
     public ModelAndView HelloTest(ModelAndView m) {
