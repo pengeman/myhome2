@@ -65,6 +65,19 @@ public class BookMarkController {
         String s = "新增书签 成功" + r;
         return JSON.toJSONString(s);
     }
+
+    @RequestMapping(value = "/gosync")
+    public ModelAndView gosync(ModelAndView md) {
+        // 同步页面
+        List<BookMark> bookMarks = this.bookMarkService.getAllBookMarks();
+        md.addObject("title", "setup myhome");
+        md.addObject("rows", bookMarks);
+//        md.setViewName("setupnew");
+        md.setViewName("setupnew2");
+        return md;
+    }
+
+
     @RequestMapping(value = "/test")
     public ModelAndView HelloTest(ModelAndView m) {
         m.addObject("title", "小明tetetete");

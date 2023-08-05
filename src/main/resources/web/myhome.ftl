@@ -27,6 +27,19 @@ title,
     #tcss{ width:400px; overflow:hidden}
     .left{ float:left; width:180px; border:1px solid #F00}
     .right{ float:right; width:200px; border:1px solid #00F}
+    #footer {
+        height: 20px;
+        line-height: 20px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: right;
+        background: #b333;
+        color: #7766ff;
+        font-family: Arial;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
 </style>
 </head>
 <body onload="initial();" >
@@ -37,7 +50,7 @@ title,
         <a href="https://www.baidu.com/" id="s1" style="display: block"><img src="image/baidu2.png" class="cpic" ></a>
         <a href="https://www4.bing.com/" id="s2" style="display: none"><img src="image/binglog.jpeg" class="cpic" ></a>
         <a href="https://www.google.com/" id="s3" style="display: none"><img src="image/google.png" class="cpic" ></a>
-<a href="gosetup" class="right">SETUP</a>
+
         <input type="text" name="word" id="word" style="width:500px;height:30px;background-color: #FDD6DC">
         <input type="submit" class="ss_btn" id="search_btn" style="width:40px;height:30px;background-color:#FDD6DC"  value="搜 索">
         <input type="button" value="clear" onclick="javascript:cls();"><br/>
@@ -153,7 +166,7 @@ title,
     </table>
 </form>
 
-
+<div id="footer"><a href="gosetup">[setup]</a>&nbsp&nbsp<a href="gosync">[同步]</a></div>
 </body>
 
 
