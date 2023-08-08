@@ -68,12 +68,8 @@ public class BookMarkController {
 
     @RequestMapping(value = "/gosync")
     public ModelAndView gosync(ModelAndView md) {
-        // 同步页面
-        List<BookMark> bookMarks = this.bookMarkService.getAllBookMarks();
-        md.addObject("title", "setup myhome");
-        md.addObject("rows", bookMarks);
-//        md.setViewName("setupnew");
-        md.setViewName("setupnew2");
+        // 进入同步页面，点击开始同步，将服务端数据下载，更新本地数据，再将本地新数据上传服务端
+        md.setViewName("sync");
         return md;
     }
 

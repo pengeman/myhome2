@@ -31,4 +31,14 @@ public class BookMarkServiceImpl implements BookMarkService {
         return this.saveBookMark(name, url);
     }
 
+    @Override
+    public void uploadBookMark(String bookmark) {
+
+    }
+
+    @Override
+    public String download() {
+        return null;
+    }
+
 }
