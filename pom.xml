@@ -13,6 +13,7 @@
 	<version>0.2</version>
 	<name>myhome2</name>
 	<description>myhome2</description>
+	<packaging>jar</packaging>
 	<properties>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

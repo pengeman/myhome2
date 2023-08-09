@@ -11,5 +11,8 @@ public interface BookMarkService {
     public boolean saveBookMark(String name,String url);
     public boolean saveBookMark(BookMark bookMark);
 
+    public void uploadBookMark(String bookmark);
+
+    public String download();
 
 }
