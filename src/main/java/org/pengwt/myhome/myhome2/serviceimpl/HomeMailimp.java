@@ -121,7 +121,9 @@ public class HomeMailimp implements HomeMail {
      * @throws UnsupportedEncodingException
      */
     public String getSubject() throws MessagingException, UnsupportedEncodingException {
-        String subject = MimeUtility.decodeText(mimeMessage.getSubject());
+        String subject = mimeMessage.getSubject();
+        System.out.println(subject);
+        subject = MimeUtility.decodeText(subject);
         if (subject == null) {
             subject = "";
         }
@@ -373,6 +375,45 @@ public class HomeMailimp implements HomeMail {
         return folder.getMessages();
     }
 
+
+    /**
+     * 得到189邮箱消息
+     * @param host
+     * @param username
+     * @param password
+     * @param protocol
+     * @return
+     * @throws MessagingException
+     */
+    public static Message[] get189Message(String host, String username, String password, String protocol) throws MessagingException {
+        //创建属性对象
+        Properties props = System.getProperties();
+        props.setProperty("mail.store.protocol", protocol);
+        //创建会话
+        Session session = Session.getDefaultInstance(props, null);
+        //存储对象
+        Store store = session.getStore(protocol);
+        //连接
+        store.connect(host, username, password);
+        //创建目录对象
+        Folder folder = store.getFolder("myhome");
+        if (folder instanceof IMAPFolder) {
+            IMAPFolder imapFolder = (IMAPFolder)folder;
+            System.out.println(imapFolder.getFullName());
+            //javamail中使用id命令有校验checkOpened, 所以要去掉id方法中的checkOpened();
+            imapFolder.doCommand(new IMAPFolder.ProtocolCommand() {
+                public Object doCommand(IMAPProtocol p) throws com.sun.mail.iap.ProtocolException {
+                    p.id("FUTONG");
+                    return null;
+                }
+            });
+        }
+        if(folder != null) {
+            folder.open(Folder.READ_WRITE);
+        }
+        return folder.getMessages();
+    }
+
     /**
      * 获取qq邮箱信息
      *
@@ -497,20 +538,20 @@ Message[] messages = new Message[0];
 
 
     public static void main(String[] args) throws MessagingException, IOException, ParseException {
-        //163登录信息
+        //189登录信息
         //邮件服务器
-        String host = "imap.163.com";
+        String host = "pop.189.cn";
         //邮箱账号
-        String username = "peng4567";
-        //授权码
-        String password = "pengadmin2";
+        String username = "18935183641";
+        //授权码zL=3yH$2B@6rW*4t
+        String password = "zL=3yH$2B@6rW*4t";
         //协议
         String protocol = "imap";
         //只读取该邮箱发来的邮件
         String fromMail = null;
         //只读取该日期以后的邮件
         String startDate = null;
-        List<Message> messageList = filterMessage(getWEMessage(host, username, password, protocol), fromMail, startDate);
+        List<Message> messageList = filterMessage(get189Message(host, username, password, protocol), fromMail, startDate);
         printMailMessage(messageList);
 
         //qq登录信息
