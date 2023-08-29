@@ -37,14 +37,7 @@ public class BookMarkController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/myhome3")
-    public ModelAndView showBookMarks3(ModelAndView modelAndView) {
-        List<BookMark> bms = bookMarkService.getAllBookMarks();
 
-        modelAndView.addObject("rows", bms);
-        modelAndView.setViewName("myhome3");
-        return modelAndView;
-    }
 
     @RequestMapping(value = "/gosetup")
     public ModelAndView gosetup(ModelAndView md) {
@@ -52,8 +45,8 @@ public class BookMarkController {
         List<BookMark> bookMarks = this.bookMarkService.getAllBookMarks();
         md.addObject("title", "setup myhome");
         md.addObject("rows", bookMarks);
-//        md.setViewName("setupnew");
-        md.setViewName("setupnew2");
+        md.setViewName("setupnew");
+//        md.setViewName("setupnew2");
         return md;
     }
 
@@ -65,6 +58,15 @@ public class BookMarkController {
         String s = "新增书签 成功" + r;
         return JSON.toJSONString(s);
     }
+
+    // 删除一条记录
+    @PostMapping(value = "/setupdeleteitem")
+    public ModelAndView setupdeleteitem(@RequestParam(name="id") long id){
+        this.bookMarkService.deleteBookMark(id);
+        return new ModelAndView("gosetup");
+    }
+
+
 
     @RequestMapping(value = "/gosync")
     public ModelAndView gosync(ModelAndView md) {

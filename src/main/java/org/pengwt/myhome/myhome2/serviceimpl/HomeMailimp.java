@@ -385,7 +385,7 @@ public class HomeMailimp implements HomeMail {
      * @return
      * @throws MessagingException
      */
-    public static Message[] get189Message(String host, String username, String password, String protocol) throws MessagingException {
+    public static Message[] get189Message(String host, String username, String password, String protocol, String sfolder) throws MessagingException {
         //创建属性对象
         Properties props = System.getProperties();
         props.setProperty("mail.store.protocol", protocol);
@@ -396,7 +396,7 @@ public class HomeMailimp implements HomeMail {
         //连接
         store.connect(host, username, password);
         //创建目录对象
-        Folder folder = store.getFolder("myhome");
+        Folder folder = store.getFolder(sfolder);
         if (folder instanceof IMAPFolder) {
             IMAPFolder imapFolder = (IMAPFolder)folder;
             System.out.println(imapFolder.getFullName());
@@ -551,7 +551,7 @@ Message[] messages = new Message[0];
         String fromMail = null;
         //只读取该日期以后的邮件
         String startDate = null;
-        List<Message> messageList = filterMessage(get189Message(host, username, password, protocol), fromMail, startDate);
+        List<Message> messageList = filterMessage(get189Message(host, username, password, protocol, "INBOX"), fromMail, startDate);
         printMailMessage(messageList);
 
         //qq登录信息

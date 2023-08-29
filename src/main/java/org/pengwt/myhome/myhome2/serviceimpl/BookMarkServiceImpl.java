@@ -41,4 +41,9 @@ public class BookMarkServiceImpl implements BookMarkService {
         return null;
     }
 
+    @Override
+    public void deleteBookMark(long id) {
+        this.bookMarkDao.delBookMark(id);
+    }
+
 }

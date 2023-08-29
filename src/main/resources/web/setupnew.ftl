@@ -17,11 +17,14 @@
     <tr>
         <td>名称</td>
         <td>链接</td>
+        <td>删除</td>
     </tr>
     <#list rows as bookmark >
         <tr>
+            <div id="id" style="display:none">${bookmark.id}</div>
             <td>${bookmark.name}</td>
             <td>${bookmark.url}</td>
+            <td><a href="javascript:void(0);" onclick="itemdelete('${bookmark.id}')">删除</a></td>
         </tr>
     </#list>
 
@@ -29,3 +32,15 @@
 
 </body>
 </html>
+<script type="text/javascript">
+    function itemdelete(id){
+        $.post("setupdeleteitem",
+            {
+                id:id
+            },
+            function(data,status){
+                alert("Data: " + data + "\nStatus: " + status);
+                window.location.href="gosetup";
+            });
+    }
+</script>
