@@ -28,7 +28,7 @@
     </insert>
 
     <delete id="deleteBookMarkById" parameterClass="int">
-        delete  cc where id=#id#
+        delete from cc where id=#id#
     </delete>
 
     <update id="updateBookMark" parameterClass="BookMark">

@@ -69,8 +69,9 @@ public class BookMarkDaoImpl implements BookMarkDao {
     public boolean deleteBookMarkById(long id) {
         boolean flag = false;
         Object object = null;
+        int id2 = (int) id;
         try {
-            object = sqlMapClient.delete("deleteBookMarkById", id);
+            object = sqlMapClient.delete("deleteBookMarkById", id2);
             System.out.println("删除BookMark信息的返回值：" + object + "，这里返回的是影响的行数");
         } catch (SQLException e) {
             e.printStackTrace();
