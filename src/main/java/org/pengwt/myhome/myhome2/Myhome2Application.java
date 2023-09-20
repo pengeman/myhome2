@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment;
 
 @SpringBootApplication
 public class Myhome2Application {
+	private final static Integer ver = 1; // 当前版本
 	@Autowired
 	Environment environment;
 //	@LocalServerPort
@@ -20,7 +21,7 @@ public class Myhome2Application {
 		return environment.getProperty("server.port");
 	}
 	public static void main(String[] args) {
-		new NewMan().firstone(1);
+		new NewMan().firstone(ver);
 		System.out.println("before appliation...");
 		SpringApplication.run(Myhome2Application.class, args);
 

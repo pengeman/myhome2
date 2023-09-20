@@ -3,13 +3,22 @@
         "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap>
     <typeAlias alias="BookMark" type="org.pengwt.myhome.myhome2.entity.BookMark"/>
-
+    <typeAlias alias="User" type="org.pengwt.myhome.myhome2.entity.User"/>
     <select id="selectAllBookMark" resultClass="BookMark">
         select id,name,url from cc
     </select>
 
+    <select id="selectBookMarkByUser" parameterClass="BookMark" resultClass="BookMark">
+        select * from cc where userid=#userid#
+    </select>
+
+
     <select id="selectBookMarkById" parameterClass="java.lang.Integer" resultClass="BookMark">
         select * from cc where id=#id#
+    </select>
+
+    <select id="selectBookMarkByIdAndUser" parameterClass="BookMark" resultClass="BookMark">
+        select * from cc where id=#id# and userid=#userid#
     </select>
 
     <select id="getver" resultClass="int">
@@ -19,7 +28,7 @@
     <insert id="saveBookMark" parameterClass="BookMark">
         insert into cc(name,url) values(#name#, #url#)
         <selectKey resultClass="int" keyProperty="id" >
-            select seq as value from sqlite_sequence;
+            select seq as value from sqlite_sequence where name = 'cc';
         </selectKey>
     </insert>
 
@@ -35,8 +44,21 @@
         update cc set name=#name#,url=#url# where id=#id#
     </update>
 
+    <select id="getUserById" parameterClass="java.lang.Integer" resultClass="User">
+        select id , name , pwd from user where id = #id#
+    </select>
+    <select id="getUserByName" parameterClass="java.lang.String" resultClass="User">
+        select id , name , pwd from user where name=#name#
+    </select>
+
     <statement id="createTablecc">
-        CREATE TABLE `cc` (`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,`name` CHAR, `url` CHAR)
+        CREATE TABLE `cc` (`id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,`name` CHAR, `url` CHAR)
+    </statement>
+    <statement id="createTableUser">
+        CREATE TABLE user(id integer not null primary key auto_increment ,name char,pwd char);
+    </statement>
+    <statement id="alterTablecc">
+        alter table cc add column userid int;
     </statement>
 
     <statement id="createTablever">

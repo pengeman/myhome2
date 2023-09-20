@@ -2,6 +2,8 @@ package org.pengwt.myhome.myhome2.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.pengwt.myhome.myhome2.entity.BookMark;
+import org.pengwt.myhome.myhome2.entity.User;
+
 import java.util.List;
 
 /**
@@ -22,4 +24,8 @@ public interface BookMarkDao {
     public boolean saveBookMark(String name,String url);
     public boolean delBookMark(long id);
     public boolean updateBookMark(BookMark bookMark);
+    public void createTable(String tablename);
+    public void alterTable(String tablename);
+    public User getUserById(long id);
+    public User getUserByName(String username);
 }

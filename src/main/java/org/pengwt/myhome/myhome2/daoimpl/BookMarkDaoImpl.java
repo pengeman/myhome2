@@ -7,6 +7,7 @@ import lombok.val;
 import org.pengwt.myhome.myhome2.NewMan;
 import org.pengwt.myhome.myhome2.dao.BookMarkDao;
 import org.pengwt.myhome.myhome2.entity.BookMark;
+import org.pengwt.myhome.myhome2.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -85,8 +86,9 @@ public class BookMarkDaoImpl implements BookMarkDao {
     @Override
     public List<BookMark> getAllBookMark() {
         List<BookMark> allBookMark = null;
+
         try {
-            allBookMark = sqlMapClient.queryForList("selectAllBookMark");
+            allBookMark = sqlMapClient.queryForList("selectBookMarkByUser");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -120,6 +122,54 @@ public class BookMarkDaoImpl implements BookMarkDao {
         }
         return false;
     }
+
+    @Override
+    public void createTable(String tablename) {
+        try {
+            sqlMapClient.update("createTablecc");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void alterTable(String tablename) {
+        try {
+            sqlMapClient.update("createTableUser");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public User getUserById(long id) {
+        User user = null;
+        try {
+            user = (User) sqlMapClient.queryForObject(id+"");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  user;
+    }
+
+    /**
+     * 得到用户，根据名称
+     * @param username
+     * @return
+     */
+   @Override
+    public User getUserByName(String username){
+        User user = null;
+       try {
+           user = (User) sqlMapClient.queryForObject("getUserByName",username);
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+       return user;
+    }
+
+
 
 
     public static void main(String[] args) {

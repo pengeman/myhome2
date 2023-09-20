@@ -2,6 +2,7 @@ package org.pengwt.myhome.myhome2.serviceimpl;
 
 import org.pengwt.myhome.myhome2.dao.BookMarkDao;
 import org.pengwt.myhome.myhome2.entity.BookMark;
+import org.pengwt.myhome.myhome2.entity.User;
 import org.pengwt.myhome.myhome2.service.BookMarkService;
 import org.springframework.stereotype.Component;
 
@@ -44,6 +45,17 @@ public class BookMarkServiceImpl implements BookMarkService {
     @Override
     public void deleteBookMark(long id) {
         this.bookMarkDao.delBookMark(id);
+    }
+
+    @Override
+    public boolean loginVerify(String username, String pwd) {
+        User user = bookMarkDao.getUserByName(username);
+        if (user != null){
+            if(user.getName().equals(username) && user.getPwd().equals(pwd))                return true;
+            else return false;
+        }else {
+            return false;
+        }
     }
 
 }

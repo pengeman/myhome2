@@ -3,9 +3,7 @@ package org.pengwt.myhome.myhome2;
 import com.ibatis.common.resources.Resources;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
-import org.pengwt.myhome.myhome2.dao.BookMarkDao;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -24,10 +22,7 @@ import java.util.Properties;
  * @return
  */
 @Log4j2
-public class NewMan {
-    @Resource
-    public BookMarkDao bookMarkDao;
-
+public class NewMan2 {
     final private static String DATA_DIR = System.getProperty("user.home") + "/MyHomePage/data/";
     final private static String FILE_DB = "myhome.db"; // 数据库文件
     final private static String SQL_CONFIG_PATH = DATA_DIR + "SqlMap.properties";
@@ -41,10 +36,9 @@ public class NewMan {
     }
 
     /*
-    第一次运行, 做初始设置, 创建数据库文件目录,创建数据库链接文件及参数
+    每次运行都执行这段程序，检查当前版本是否需要更新，是否需要更新数据库和配置文件
      */
     public void firstone(int ver) {
-        // 第一次运行时执行，返回1
         File file_url = new File(DATA_DIR);
         File file_db = new File(DATA_DIR + FILE_DB);
         log.info("file_url: {}", file_url);
@@ -60,7 +54,7 @@ public class NewMan {
                 int oldver = checkver(ver);
                 if (ver > oldver){
                     // 如果有新版本，执行相应更新操作
-                    updateVer(ver, oldver);
+                    updateVer(ver);
                     createSqlConfig(ver);
                 }
             }
@@ -70,53 +64,12 @@ public class NewMan {
         }
     }
 
-    private void updateVer(int ver, int oldver) {
+    private void updateVer(int ver) {
         // 执行新的更新操作
-        if (oldver == 1){ // 如果是ver1升级
-            updatever1();
-        }
-        if (oldver == 2){
-            updatever2();
-        }
+
 
     }
 
-    private void updatever1(){
-        createTable();
-        alterTable( );
-        upVerTo(2);
-//        CREATE TABLE user(id integer not null primary key autoincrement ,name char,pwd char);
-//        alter table cc add column userid int;
-
-    }
-    private void updatever2(){
-
-    }
-    private void updatever3(){
-
-    }
-
-    private void upVerTo(int newver){
-        String templateSqlconfig = "mapper/SqlMap.properties";
-        try {
-            Properties pps = Resources.getResourceAsProperties(templateSqlconfig);
-            String v = pps.getProperty("ver");
-            if (v == null ) {
-            pps.setProperty("ver",newver+"");
-            java.io.FileOutputStream fileOutputStream = new java.io.FileOutputStream(new File(templateSqlconfig));
-            pps.store(fileOutputStream,"new ver on " + new SimpleDateFormat("yyyy/mm/dd").format(new Date()));
-
-            }
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-    }
-    private void alterTable(){
-        bookMarkDao.alterTable("cc");
-    }
-    private void createTable(){
-        bookMarkDao.createTable("user");
-    }
     private int checkver(int ver) {
         String templateSqlconfig = "mapper/SqlMap.properties";
         try {

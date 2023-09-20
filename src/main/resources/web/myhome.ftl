@@ -40,10 +40,13 @@ title,
         font-size: 12px;
         letter-spacing: 1px;
     }
+    .hide {
+        display: none;
+    }
 </style>
 </head>
 <body onload="initial();" >
-
+<a href="dd"
 <!-- 百度搜索 -->
 <form action="https://www.baidu.com/s" method="get" target="_blank" id="form1"  >
     <div>
@@ -104,10 +107,12 @@ title,
                 <a href="https://www.speedtest.cn" title="speedtest" target="_blank" >在线测速</a>
                 <a href="https://www.cnblogs.com/" title="cnblogs" target="_blank">我的博客</a>
                 <a href="https://home.zoho.com.cn/home" target="_blank">zoho笔记</a><br/>
+                <#if rows??>
                 <#list rows as bookmark >
                     <a href="${bookmark.url}" target="_blank" title="${bookmark.name}">${bookmark.name}</a>
                     <#if (bookmark_index + 1) % 3 == 0 ><br/></#if>
                 </#list>
+                </#if>
             </li>
         </ul>
         <h4>
@@ -165,8 +170,9 @@ title,
         </tbody>
     </table>
 </form>
+<div class="hide"></div>
 
-<div id="footer"><a href="gosetup">[setup]</a>&nbsp&nbsp<a href="gosync">[同步]</a></div>
+<div id="footer">${footer_var}</div>
 </body>
 
 

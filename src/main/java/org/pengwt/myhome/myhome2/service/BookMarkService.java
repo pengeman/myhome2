@@ -16,4 +16,6 @@ public interface BookMarkService {
     public String download();
 
     void deleteBookMark(long id);
+
+    boolean loginVerify(String username, String pwd);
 }
