@@ -58,4 +58,14 @@ public class BookMarkServiceImpl implements BookMarkService {
         }
     }
 
+    @Override
+    public User getUserByName(String username) {
+        return bookMarkDao.getUserByName(username);
+            }
+
+    @Override
+    public User getUserById(int id) {
+        return bookMarkDao.getUserById(id);
+    }
+
 }

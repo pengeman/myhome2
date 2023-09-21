@@ -1,6 +1,7 @@
 package org.pengwt.myhome.myhome2.service;
 
 import org.pengwt.myhome.myhome2.entity.BookMark;
+import org.pengwt.myhome.myhome2.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface BookMarkService {
     void deleteBookMark(long id);
 
     boolean loginVerify(String username, String pwd);
+    User getUserByName(String username);
+    User getUserById(int id);
 }

@@ -5,20 +5,20 @@
     <typeAlias alias="BookMark" type="org.pengwt.myhome.myhome2.entity.BookMark"/>
     <typeAlias alias="User" type="org.pengwt.myhome.myhome2.entity.User"/>
     <select id="selectAllBookMark" resultClass="BookMark">
-        select id,name,url from cc
+        select id,name,url ,userid from cc
     </select>
 
     <select id="selectBookMarkByUser" parameterClass="BookMark" resultClass="BookMark">
-        select * from cc where userid=#userid#
+        select id,name,url ,userid from cc where userid=#userid#
     </select>
 
 
     <select id="selectBookMarkById" parameterClass="java.lang.Integer" resultClass="BookMark">
-        select * from cc where id=#id#
+        select id,name,url ,userid from cc where id=#id#
     </select>
 
     <select id="selectBookMarkByIdAndUser" parameterClass="BookMark" resultClass="BookMark">
-        select * from cc where id=#id# and userid=#userid#
+        select id,name,url ,userid from cc where id=#id# and userid=#userid#
     </select>
 
     <select id="getver" resultClass="int">
@@ -26,7 +26,7 @@
     </select>
 
     <insert id="saveBookMark" parameterClass="BookMark">
-        insert into cc(name,url) values(#name#, #url#)
+        insert into cc(name,url,userid) values(#name#, #url#, #userid#)
         <selectKey resultClass="int" keyProperty="id" >
             select seq as value from sqlite_sequence where name = 'cc';
         </selectKey>

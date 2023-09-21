@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.log4j.Log4j2;
 import org.pengwt.myhome.myhome2.entity.BookMark;
+import org.pengwt.myhome.myhome2.entity.User;
 import org.pengwt.myhome.myhome2.service.BookMarkService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -71,8 +72,13 @@ public class BookMarkController {
 
     //  增加新bookmark项
     @PostMapping(value = "/dosetup")
-    public String dosetup(@RequestParam(name="name") String name , @RequestParam(name="url") String url){
-        BookMark bookMark = new BookMark(name,url);
+    public String dosetup(HttpServletRequest request){
+        //@RequestParam(name="name") String name , @RequestParam(name="url") String url
+          String name = request.getParameter("name");
+          String url = request.getParameter("user");
+          String username = (String) request.getSession().getAttribute("user");
+          User user = bookMarkService.getUserByName(username);
+        BookMark bookMark = new BookMark(name,url, user.getId());
         boolean r = this.bookMarkService.saveBookMark(bookMark);
         String s = "新增书签 成功" + r;
         return JSON.toJSONString(s);
@@ -107,6 +113,7 @@ public class BookMarkController {
         String username = request.getParameter("username");
         String pwd = request.getParameter("password");
         boolean ok = bookMarkService.loginVerify(username,pwd);
+        User user = bookMarkService.getUserByName(username);
         ModelAndView modelAndView = new ModelAndView();
         if (ok){
             session.setAttribute("user",username);
@@ -122,14 +129,5 @@ public class BookMarkController {
         }
         return modelAndView;
     }
-    @RequestMapping(value = "/test")
-    public ModelAndView HelloTest(ModelAndView m) {
-        m.addObject("title", "小明tetetete");
-        m.addObject("rows", Lists.newArrayList(
-                new BookMark(1, "urlurlurl111", "namnamnam111", null)
-                , new BookMark(3, "urlurlurl3333", "namnamnam3333", null)
-        ));
-        m.setViewName("myhome");
-        return m;
-    }
+
 }

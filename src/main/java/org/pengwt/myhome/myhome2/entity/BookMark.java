@@ -18,10 +18,12 @@ public class BookMark<T> {
     private long id;
     private String name;
     private String url;
+    private int userid;
     private T data;
 
-    public BookMark(String name, String url){
+    public BookMark(String name, String url,int userid){
     this.setName(name);
     this.setUrl(url);
+    this.setUserid(userid);
     }
 }

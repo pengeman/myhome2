@@ -8,24 +8,33 @@ import java.util.List;
 
 /**
  * @param
+ * @author pengweitao 2022/4/11
+ * @version 1.0
  * @exception
  * @return
- * @version 1.0
- * @author pengweitao 2022/4/11
  */
 
 @Mapper
 public interface BookMarkDao {
     // 读取书签信息
     public List<BookMark> getAllBookMark();
+
     public BookMark getBookMark(long id);
 
+    boolean saveBookMark(String name, String url);
+
     // 写入书签信息
-    public boolean saveBookMark(String name,String url);
+    public boolean saveBookMark(String name, String url, int userid);
+
     public boolean delBookMark(long id);
+
     public boolean updateBookMark(BookMark bookMark);
+
     public void createTable(String tablename);
+
     public void alterTable(String tablename);
+
     public User getUserById(long id);
+
     public User getUserByName(String username);
 }

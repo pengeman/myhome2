@@ -11,10 +11,7 @@ import org.pengwt.myhome.myhome2.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -102,7 +99,12 @@ public class BookMarkDaoImpl implements BookMarkDao {
 
     @Override
     public boolean saveBookMark(String name, String url) {
-        BookMark bookMark = new BookMark(name, url);
+        return false;
+    }
+
+    @Override
+    public boolean saveBookMark(String name, String url, int userid) {
+        BookMark bookMark = new BookMark(name, url, userid);
         boolean r = saveBookMark(bookMark);
         return r;
     }
