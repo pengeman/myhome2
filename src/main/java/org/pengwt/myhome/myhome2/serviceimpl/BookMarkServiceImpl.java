@@ -21,6 +21,11 @@ public class BookMarkServiceImpl implements BookMarkService {
     }
 
     @Override
+    public List<BookMark> getAllBookMarksByUserid(int userid) {
+        return bookMarkDao.getAllBookMarkByUserid(userid);
+    }
+
+    @Override
     public boolean saveBookMark(String name, String url) {
         return bookMarkDao.saveBookMark(name, url);
     }
@@ -50,10 +55,10 @@ public class BookMarkServiceImpl implements BookMarkService {
     @Override
     public boolean loginVerify(String username, String pwd) {
         User user = bookMarkDao.getUserByName(username);
-        if (user != null){
-            if(user.getName().equals(username) && user.getPwd().equals(pwd))                return true;
+        if (user != null) {
+            if (user.getName().equals(username) && user.getPwd().equals(pwd)) return true;
             else return false;
-        }else {
+        } else {
             return false;
         }
     }
@@ -61,11 +66,21 @@ public class BookMarkServiceImpl implements BookMarkService {
     @Override
     public User getUserByName(String username) {
         return bookMarkDao.getUserByName(username);
-            }
+    }
 
     @Override
     public User getUserById(int id) {
         return bookMarkDao.getUserById(id);
+    }
+
+    @Override
+    public void newUser(String username, String pwd) {
+        bookMarkDao.insertUser(username, pwd);
+    }
+
+    @Override
+    public void newUser(User user) {
+
     }
 
 }

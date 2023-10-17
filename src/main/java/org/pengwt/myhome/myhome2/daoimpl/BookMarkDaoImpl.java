@@ -29,7 +29,8 @@ public class BookMarkDaoImpl implements BookMarkDao {
 
 
     /**
-       */
+     *
+     */
     public SqlMapClient getSqlMapClient() {
         // todo : getSqlMapClient
         try {
@@ -85,7 +86,19 @@ public class BookMarkDaoImpl implements BookMarkDao {
         List<BookMark> allBookMark = null;
 
         try {
-            allBookMark = sqlMapClient.queryForList("selectBookMarkByUser");
+            allBookMark = sqlMapClient.queryForList("selectAllBookMark");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allBookMark;
+    }
+
+    @Override
+    public List<BookMark> getAllBookMarkByUserid(int userid) {
+        List<BookMark> allBookMark = null;
+
+        try {
+            allBookMark = sqlMapClient.queryForList("selectBookMarkByUser",userid);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -116,6 +129,7 @@ public class BookMarkDaoImpl implements BookMarkDao {
 
     @Override
     public boolean updateBookMark(BookMark bookMark) {
+        System.out.println("updateBookMark have not finish");
         try {
             int r = sqlMapClient.update("updateBookMark");
             return r > 0 ? true : false;
@@ -148,30 +162,59 @@ public class BookMarkDaoImpl implements BookMarkDao {
     public User getUserById(long id) {
         User user = null;
         try {
-            user = (User) sqlMapClient.queryForObject(id+"");
+            user = (User) sqlMapClient.queryForObject(id + "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return  user;
+        return user;
     }
 
     /**
      * 得到用户，根据名称
+     *
      * @param username
      * @return
      */
-   @Override
-    public User getUserByName(String username){
+    @Override
+    public User getUserByName(String username) {
         User user = null;
-       try {
-           user = (User) sqlMapClient.queryForObject("getUserByName",username);
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }
-       return user;
+        try {
+            user = (User) sqlMapClient.queryForObject("getUserByName", username);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
+    @Override
+    public boolean insertUser(User user) {
+        try {
+            Object o = sqlMapClient.insert("insertuser", user);
+            if (o != null) return true;
+            else return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
+    @Override
+    public boolean insertUser(String name, String pwd) {
+        User user = new User<>(name, pwd);
+        return this.insertUser(user);
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        System.out.println("没有完成");
+        return false;
+    }
+
+    @Override
+    public boolean UpdateUser(String name, String pwd) {
+        System.out.println("没有完成");
+        return false;
+    }
 
 
     public static void main(String[] args) {

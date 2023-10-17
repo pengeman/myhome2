@@ -19,6 +19,8 @@ public interface BookMarkDao {
     // 读取书签信息
     public List<BookMark> getAllBookMark();
 
+    public List<BookMark> getAllBookMarkByUserid(int userid);
+
     public BookMark getBookMark(long id);
 
     boolean saveBookMark(String name, String url);
@@ -37,4 +39,10 @@ public interface BookMarkDao {
     public User getUserById(long id);
 
     public User getUserByName(String username);
+
+    public boolean insertUser(User user);
+    public boolean insertUser(String name, String pwd);
+
+    public boolean updateUser(User user);
+    public boolean UpdateUser(String name,String pwd);
 }

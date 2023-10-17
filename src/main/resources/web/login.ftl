@@ -9,12 +9,12 @@
 <div class="container">
         <div class="form-box">
             <!-- 注册 -->
-		<form action="/register" method="post" class="register-box hidden">
+		<form action="/doSignup" method="post" class="register-box hidden">
 			<h1>register</h1>
 			<input type="text" placeholder="用户名" name="username">
 			<input type="email" placeholder="邮箱" name="email">
 			<input type="password" placeholder="密码" name="password" id="pw1">
-			<input type="password" placeholder="确认密码" name="password" id="pw2">
+			<input type="password" placeholder="确认密码" name="password2" id="pw2">
 			<input type="submit" name="" class="but" value="注册" />
 		</form>
 		<!-- 登录 -->

@@ -40,7 +40,7 @@ public class BookMarkController {
         String footer = "";
 
         // todo 判断是否登录
-        String user = (String) session.getAttribute("user");
+        String user = (String) session.getAttribute("username");
         if (user == null) {
             footer = "<a href=\"gologin\" target=\"_self\">[login]</a>";
         }
@@ -60,9 +60,12 @@ public class BookMarkController {
 
 
     @RequestMapping(value = "/gosetup")
-    public ModelAndView gosetup(ModelAndView md) {
+    public ModelAndView gosetup(HttpServletRequest request) {
         // 检索全部数据，传入setup页面
+        ModelAndView md = new ModelAndView();
+        int userid = (Integer) request.getSession().getAttribute("userid");
         List<BookMark> bookMarks = this.bookMarkService.getAllBookMarks();
+        this.bookMarkService.getAllBookMarksByUserid(userid);
         md.addObject("title", "setup myhome");
         md.addObject("rows", bookMarks);
         md.setViewName("setupnew");
@@ -114,9 +117,11 @@ public class BookMarkController {
         String pwd = request.getParameter("password");
         boolean ok = bookMarkService.loginVerify(username,pwd);
         User user = bookMarkService.getUserByName(username);
+        int userid = user.getId();
         ModelAndView modelAndView = new ModelAndView();
         if (ok){
-            session.setAttribute("user",username);
+            session.setAttribute("username",username);
+            session.setAttribute("userid",userid);
 //            modelAndView.addObject("title","myhome");
             modelAndView.setViewName("gohome");
 //            List<BookMark> bms = bookMarkService.getAllBookMarks();
@@ -130,4 +135,27 @@ public class BookMarkController {
         return modelAndView;
     }
 
+    @PostMapping(value = "/doSignup")
+    public ModelAndView doSignup(HttpServletRequest request){
+        ModelAndView md = new ModelAndView("login");
+        String username = request.getParameter("username");
+        String pwd = request.getParameter("password");
+        String repwd = request.getParameter("password2");
+        if (username == null || username.isEmpty()){
+            md.addObject("error","用户名不能空");
+            md.setViewName("login");
+            return md;
+        }
+        if (!pwd.equals(repwd)){
+            md.addObject("error","用户名口令不一致");
+            md.setViewName("login");
+            return md;
+        }else{
+            // todo 注册信息正确，允许注册
+            bookMarkService.newUser(username,pwd);
+            md.addObject("error","注册成功，再次登录");
+            md.setViewName("login");
+            return md;
+        }
+    }
 }

@@ -8,7 +8,7 @@
         select id,name,url ,userid from cc
     </select>
 
-    <select id="selectBookMarkByUser" parameterClass="BookMark" resultClass="BookMark">
+    <select id="selectBookMarkByUser" parameterClass="java.lang.Integer" resultClass="BookMark">
         select id,name,url ,userid from cc where userid=#userid#
     </select>
 
@@ -50,6 +50,12 @@
     <select id="getUserByName" parameterClass="java.lang.String" resultClass="User">
         select id , name , pwd from user where name=#name#
     </select>
+    <insert id="insertuser" parameterClass="User">
+        insert into user (name,pwd) values(#name#,#pwd#)
+        <selectKey resultClass="int" keyProperty="id" >
+            select seq as value from sqlite_sequence where name = 'user';
+        </selectKey>
+    </insert>
 
     <statement id="createTablecc">
         CREATE TABLE `cc` (`id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,`name` CHAR, `url` CHAR)
