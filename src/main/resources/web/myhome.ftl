@@ -46,7 +46,7 @@ title,
 </style>
 </head>
 <body onload="initial();" >
-<a href="dd"
+
 <!-- 百度搜索 -->
 <form action="https://www.baidu.com/s" method="get" target="_blank" id="form1"  >
     <div>
