@@ -42,9 +42,11 @@ public class BookMarkController {
         // todo 判断是否登录
         String user = (String) session.getAttribute("username");
         if (user == null) {
+            log.info("用户没有登陆");
             footer = "<a href=\"gologin\" target=\"_self\">[login]</a>";
         }
         else {
+            log.info("用户登陆...");
             List<BookMark> bms = bookMarkService.getAllBookMarks();
             modelAndView.addObject("rows", bms);
             footer = "<a href=\"gosetup\">[setup]</a>&nbsp&nbsp<a href=\"gosync\">[同步]</a>";
