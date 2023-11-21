@@ -9,7 +9,7 @@ import org.springframework.core.env.Environment;
 
 @SpringBootApplication
 public class Myhome2Application {
-	private final static Integer ver = 1; // 当前版本
+	private final static Integer ver = 2; // 当前版本
 	@Autowired
 	Environment environment;
 //	@LocalServerPort
