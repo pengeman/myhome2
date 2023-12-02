@@ -83,4 +83,15 @@ public class BookMarkServiceImpl implements BookMarkService {
 
     }
 
+    @Override
+    public void createTable(String tableName) {
+        bookMarkDao.createTable(tableName);
+    }
+
+    @Override
+    public void alterTable(String tableName) {
+        bookMarkDao.alterTable(tableName);
+    }
+
+
 }

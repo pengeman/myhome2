@@ -3,10 +3,12 @@ package org.pengwt.myhome.myhome2;
 import com.ibatis.common.resources.Resources;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
+import org.pengwt.myhome.myhome2.dao.BookMarkDao;
+import org.pengwt.myhome.myhome2.service.BookMarkService;
+import org.pengwt.myhome.myhome2.serviceimpl.BookMarkServiceImpl;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import javax.annotation.Resource;
+import java.io.*;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,10 +25,14 @@ import java.util.Properties;
  */
 @Log4j2
 public class NewMan2 {
+    @Resource
+    public BookMarkDao bookMarkDao;
+    @Resource
+    public BookMarkService bookMarkService = new BookMarkServiceImpl();
     final private static String DATA_DIR = System.getProperty("user.home") + "/MyHomePage/data/";
     final private static String FILE_DB = "myhome.db"; // 数据库文件
     final private static String SQL_CONFIG_PATH = DATA_DIR + "SqlMap.properties";
-
+    final private static int ver = 2;
     static public String getSqlConfigPath() {
         return SQL_CONFIG_PATH;
     }
@@ -38,25 +44,23 @@ public class NewMan2 {
     /*
     每次运行都执行这段程序，检查当前版本是否需要更新，是否需要更新数据库和配置文件
      */
-    public void firstone(int ver) {
+    public void firstone() {
         File file_url = new File(DATA_DIR);
         File file_db = new File(DATA_DIR + FILE_DB);
         log.info("file_url: {}", file_url);
         log.info("file_db: {}", file_db);
         try {
-            if (!file_url.exists()) {
+            int curver = this.checkver();  // 曾经的版本，系统中的版本
+            log.debug("curver: {}",curver);
+            if (curver == 0){
                 file_url.mkdirs();
                 log.info("mkdirs {}", file_url);
                 //file_db.createNewFile();
-                createDB(ver);
+                createDB();
                 createSqlConfig(ver);
-            }else {
-                int oldver = checkver(ver);
-                if (ver > oldver){
-                    // 如果有新版本，执行相应更新操作
+            }else if (curver < ver){
+                    // 如果曾经的版本小于当前软件版本
                     updateVer(ver);
-                    createSqlConfig(ver);
-                }
             }
         } catch (Exception e) {
             log.error("firstone error", e);
@@ -66,14 +70,17 @@ public class NewMan2 {
 
     private void updateVer(int ver) {
         // 执行新的更新操作
-
-
+        //bookMarkDao.createTable("createTableUser");
+        //bookMarkDao.alterTable("alterTablecc");
+        bookMarkService.createTable("createTableUser");
+        bookMarkService.alterTable("alterTablecc");
     }
 
-    private int checkver(int ver) {
-        String templateSqlconfig = "mapper/SqlMap.properties";
+    private int checkver() {
+        String templateSqlconfig = getSqlConfigPath(); //"mapper/SqlMap.properties";
         try {
-            Properties pps = Resources.getResourceAsProperties(templateSqlconfig);
+            Properties pps = new Properties();
+            pps.load(new FileInputStream(new File(templateSqlconfig)));
             String v = pps.getProperty("ver");
             if (v == null ) v = "0";
             return Integer.parseInt(v);
@@ -83,7 +90,7 @@ public class NewMan2 {
         }
     }
 
-    void createDB(int ver) throws IOException {
+    void createDB() throws IOException {
         // 讲db文件写入制定的目录
         // 因为无法通过 new File 来访问jar中的文件, 所以使用流
         val srcfile = Resources.getResourceAsStream("mapper/" + FILE_DB);

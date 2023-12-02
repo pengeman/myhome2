@@ -30,4 +30,7 @@ public interface BookMarkService {
     void newUser(String username , String pwd);
 
     void newUser(User user);
+
+    void createTable(String tableName);
+    void alterTable(String tableName);
 }

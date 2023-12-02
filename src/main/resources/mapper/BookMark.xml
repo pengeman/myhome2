@@ -4,6 +4,7 @@
 <sqlMap>
     <typeAlias alias="BookMark" type="org.pengwt.myhome.myhome2.entity.BookMark"/>
     <typeAlias alias="User" type="org.pengwt.myhome.myhome2.entity.User"/>
+
     <select id="selectAllBookMark" resultClass="BookMark">
         select id,name,url ,userid from cc
     </select>
@@ -60,14 +61,14 @@
     <statement id="createTablecc">
         CREATE TABLE `cc` (`id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,`name` CHAR, `url` CHAR)
     </statement>
-    <statement id="createTableUser">
+    <update id="createTableUser">
         CREATE TABLE user(id integer not null primary key auto_increment ,name char,pwd char);
-    </statement>
-    <statement id="alterTablecc">
+    </update>
+    <update id="alterTablecc">
         alter table cc add column userid int;
-    </statement>
+    </update>
 
-    <statement id="createTablever">
+    <update id="createTablever">
         CREATE TABLE `ver_` (`code` INTEGER NOT NULL)
-    </statement>
+    </update>
 </sqlMap>

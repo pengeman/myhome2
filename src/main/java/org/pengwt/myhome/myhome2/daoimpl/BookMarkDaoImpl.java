@@ -142,7 +142,7 @@ public class BookMarkDaoImpl implements BookMarkDao {
     @Override
     public void createTable(String tablename) {
         try {
-            sqlMapClient.update("createTablecc");
+            sqlMapClient.update(tablename);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -152,7 +152,7 @@ public class BookMarkDaoImpl implements BookMarkDao {
     @Override
     public void alterTable(String tablename) {
         try {
-            sqlMapClient.update("createTableUser");
+            sqlMapClient.update(tablename);
         } catch (SQLException e) {
             e.printStackTrace();
         }

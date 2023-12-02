@@ -21,7 +21,7 @@ public class Myhome2Application {
 		return environment.getProperty("server.port");
 	}
 	public static void main(String[] args) {
-		new NewMan().firstone(ver);
+		new NewMan2().firstone();
 		System.out.println("before appliation...");
 		SpringApplication.run(Myhome2Application.class, args);
 
