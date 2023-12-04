@@ -19,7 +19,6 @@ public class BookMark<T> {
     private String name;
     private String url;
     private int userid;
-    private T data;
 
     public BookMark(String name, String url,int userid){
     this.setName(name);

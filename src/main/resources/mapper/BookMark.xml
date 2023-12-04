@@ -59,10 +59,10 @@
     </insert>
 
     <statement id="createTablecc">
-        CREATE TABLE `cc` (`id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,`name` CHAR, `url` CHAR)
+        CREATE TABLE `cc` (`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,`name` CHAR, `url` CHAR)
     </statement>
     <update id="createTableUser">
-        CREATE TABLE user(id integer not null primary key auto_increment ,name char,pwd char);
+        CREATE TABLE user(id integer not null primary key autoincrement ,name char,pwd char);
     </update>
     <update id="alterTablecc">
         alter table cc add column userid int;

@@ -54,16 +54,10 @@ public class NewMan {
                 file_url.mkdirs();
                 log.info("mkdirs {}", file_url);
                 //file_db.createNewFile();
-                createDB(ver);
-                createSqlConfig(ver);
-            }else {
-                int oldver = checkver(ver);
-                if (ver > oldver){
-                    // 如果有新版本，执行相应更新操作
-                    updateVer(ver, oldver);
-                    createSqlConfig(ver);
-                }
+
             }
+            createDB(ver);
+            createSqlConfig(ver);
         } catch (Exception e) {
             log.error("firstone error", e);
             throw new RuntimeException(e);
@@ -72,57 +66,62 @@ public class NewMan {
 
     private void updateVer(int ver, int oldver) {
         // 执行新的更新操作
-        if (oldver == 1){ // 如果是ver1升级
+        if (oldver == 1) { // 如果是ver1升级
             updatever1();
         }
-        if (oldver == 2){
+        if (oldver == 2) {
             updatever2();
         }
 
     }
 
-    private void updatever1(){
+    private void updatever1() {
         createTable();
-        alterTable( );
+        alterTable();
         upVerTo(2);
 //        CREATE TABLE user(id integer not null primary key autoincrement ,name char,pwd char);
 //        alter table cc add column userid int;
 
     }
-    private void updatever2(){
+
+    private void updatever2() {
 
     }
-    private void updatever3(){
+
+    private void updatever3() {
 
     }
 
-    private void upVerTo(int newver){
+    private void upVerTo(int newver) {
         String templateSqlconfig = "mapper/SqlMap.properties";
         try {
             Properties pps = Resources.getResourceAsProperties(templateSqlconfig);
             String v = pps.getProperty("ver");
-            if (v == null ) {
-            pps.setProperty("ver",newver+"");
-            java.io.FileOutputStream fileOutputStream = new java.io.FileOutputStream(new File(templateSqlconfig));
-            pps.store(fileOutputStream,"new ver on " + new SimpleDateFormat("yyyy/mm/dd").format(new Date()));
+            if (v == null) {
+                pps.setProperty("ver", newver + "");
+                java.io.FileOutputStream fileOutputStream = new java.io.FileOutputStream(new File(templateSqlconfig));
+                pps.store(fileOutputStream, "new ver on " + new SimpleDateFormat("yyyy/mm/dd").format(new Date()));
 
             }
         } catch (IOException e) {
             System.out.println(e);
         }
     }
-    private void alterTable(){
+
+    private void alterTable() {
         bookMarkDao.alterTable("cc");
     }
-    private void createTable(){
+
+    private void createTable() {
         bookMarkDao.createTable("user");
     }
+
     private int checkver(int ver) {
         String templateSqlconfig = "mapper/SqlMap.properties";
         try {
             Properties pps = Resources.getResourceAsProperties(templateSqlconfig);
             String v = pps.getProperty("ver");
-            if (v == null ) v = "0";
+            if (v == null) v = "0";
             return Integer.parseInt(v);
         } catch (IOException e) {
             System.out.println(e);
@@ -135,6 +134,9 @@ public class NewMan {
         // 因为无法通过 new File 来访问jar中的文件, 所以使用流
         val srcfile = Resources.getResourceAsStream("mapper/" + FILE_DB);
         File descFile = new File(DATA_DIR + FILE_DB);
+        if (descFile.exists()){
+            descFile.delete();
+        }
         Files.copy(srcfile, descFile.toPath());
         log.info("createDB {} -> {}", srcfile, descFile);
     }
@@ -158,7 +160,7 @@ public class NewMan {
         pps.setProperty("url", url);
         pps.setProperty("username", username);
         pps.setProperty("password", password);
-        pps.setProperty("ver",ver+"");
+        pps.setProperty("ver", ver + "");
 
         //以适合使用 load 方法加载到 Properties 表中的格式，
         //将此 Properties 表中的属性列表（键和元素对）写入输出流

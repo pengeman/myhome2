@@ -6,6 +6,9 @@ import lombok.val;
 import org.pengwt.myhome.myhome2.dao.BookMarkDao;
 import org.pengwt.myhome.myhome2.service.BookMarkService;
 import org.pengwt.myhome.myhome2.serviceimpl.BookMarkServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.*;
@@ -24,10 +27,12 @@ import java.util.Properties;
  * @return
  */
 @Log4j2
+@Configuration
 public class NewMan2 {
-    @Resource
+    @Autowired
     public BookMarkDao bookMarkDao;
-    @Resource
+    //@Resource
+    @Autowired
     public BookMarkService bookMarkService = new BookMarkServiceImpl();
     final private static String DATA_DIR = System.getProperty("user.home") + "/MyHomePage/data/";
     final private static String FILE_DB = "myhome.db"; // 数据库文件
