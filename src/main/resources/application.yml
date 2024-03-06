@@ -1,6 +1,10 @@
 server:
   port: 8001
 
+logging:
+  level:
+    java:
+    org:pengwt:myhome:myhome2:dao: DEBUG
 spring:
   application:
     name: myhome

@@ -118,13 +118,16 @@ public class BookMarkController {
         String username = request.getParameter("username");
         String pwd = request.getParameter("password");
         boolean ok = bookMarkService.loginVerify(username,pwd);
-        User user = bookMarkService.getUserByName(username);
-        int userid = user.getId();
         ModelAndView modelAndView = new ModelAndView();
+
         if (ok){
+            User user = bookMarkService.getUserByName(username);
+            int userid = user.getId();
             session.setAttribute("username",username);
             session.setAttribute("userid",userid);
 //            modelAndView.addObject("title","myhome");
+
+
             modelAndView.setViewName("gohome");
 //            List<BookMark> bms = bookMarkService.getAllBookMarks();
 //            modelAndView.addObject("rows", bms);
