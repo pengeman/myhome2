@@ -33,3 +33,4 @@ build/
 .vscode/
 /applogs/
 /logs/
+/log.path_IS_UNDEFINED

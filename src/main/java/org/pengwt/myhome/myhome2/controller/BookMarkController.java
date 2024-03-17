@@ -114,6 +114,7 @@ public class BookMarkController {
         HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String pwd = request.getParameter("password");
+        log.debug("login :" + username + " " + pwd);
         boolean ok = bookMarkService.loginVerify(username, pwd);
         ModelAndView modelAndView = new ModelAndView();
 

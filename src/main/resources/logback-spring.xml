@@ -134,8 +134,9 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
+    <logger name="org.apache.ibatis" level="debug"/>
 
-    <root level="info">
+    <root level="debug">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="DEBUG_FILE"/>
         <appender-ref ref="INFO_FILE"/>
