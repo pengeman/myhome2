@@ -48,8 +48,8 @@
     <select id="getUserById" parameterClass="java.lang.Integer" resultClass="User">
         select id , name , pwd from user where id = #id#
     </select>
-    <select id="getUserByName" parameterClass="java.lang.String" resultClass="User">
-        select id , name , pwd from user where name=#name#
+    <select id="getUserByName"  parameterClass="java.lang.String" resultClass="User">
+        select id , name , pwd from user where name=#username#
     </select>
     <insert id="insertuser" parameterClass="User">
         insert into user (name,pwd) values(#name#,#pwd#)

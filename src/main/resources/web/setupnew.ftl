@@ -20,6 +20,7 @@
         <td>链接</td>
         <td>删除</td>
     </tr>
+    <#if bookmark??>
     <#list rows as bookmark >
         <tr>
             <div id="id" style="display:none">${bookmark.id}</div>
@@ -28,7 +29,7 @@
             <td><a href="javascript:void(0);" onclick="itemdelete('${bookmark.id}')">删除</a></td>
         </tr>
     </#list>
-
+</#if>
 </table>
 
 </body>
