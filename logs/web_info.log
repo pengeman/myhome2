@@ -1,15 +1,33 @@
-2024-03-15 12:04:57.543 [main] INFO  org.pengwt.myhome.myhome2.Myhome2Application - Starting Myhome2Application using Java 1.8.0_392 on peng-moble with PID 12513 (/home/peng/IdeaProjects/myhome2/target/classes started by peng in /home/peng/IdeaProjects/myhome2)
-2024-03-15 12:04:57.547 [main] INFO  org.pengwt.myhome.myhome2.Myhome2Application - No active profile set, falling back to 1 default profile: "default"
-2024-03-15 12:05:00.216 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8001 (http)
-2024-03-15 12:05:00.241 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8001"]
-2024-03-15 12:05:00.243 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
-2024-03-15 12:05:00.243 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.60]
-2024-03-15 12:05:00.366 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2024-03-15 12:05:00.367 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2708 ms
-2024-03-15 12:05:01.704 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
-2024-03-15 12:05:01.731 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8001"]
-2024-03-15 12:05:01.755 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8001 (http) with context path ''
-2024-03-15 12:05:01.776 [main] INFO  org.pengwt.myhome.myhome2.Myhome2Application - Started Myhome2Application in 5.641 seconds (JVM running for 7.738)
-2024-03-15 12:05:02.373 [RMI TCP Connection(4)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-03-15 12:05:02.373 [RMI TCP Connection(4)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2024-03-15 12:05:02.377 [RMI TCP Connection(4)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-03-17 17:45:03.630 [main] INFO  org.pengwt.myhome.myhome2.Myhome2Application - Starting Myhome2Application using Java 1.8.0_392 on peng-moble with PID 14152 (/home/peng/IdeaProjects/myhome2/target/classes started by peng in /home/peng/IdeaProjects/myhome2)
+2024-03-17 17:45:03.634 [main] INFO  org.pengwt.myhome.myhome2.Myhome2Application - No active profile set, falling back to 1 default profile: "default"
+2024-03-17 17:45:06.439 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8001 (http)
+2024-03-17 17:45:06.451 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8001"]
+2024-03-17 17:45:06.452 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-03-17 17:45:06.453 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.60]
+2024-03-17 17:45:06.679 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-03-17 17:45:06.679 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2912 ms
+2024-03-17 17:45:07.928 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-03-17 17:45:07.959 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8001"]
+2024-03-17 17:45:07.995 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8001 (http) with context path ''
+2024-03-17 17:45:08.017 [main] INFO  org.pengwt.myhome.myhome2.Myhome2Application - Started Myhome2Application in 5.608 seconds (JVM running for 7.413)
+2024-03-17 17:45:08.652 [RMI TCP Connection(4)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-03-17 17:45:08.653 [RMI TCP Connection(4)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-03-17 17:45:08.657 [RMI TCP Connection(4)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2024-03-17 17:46:12.265 [http-nio-8001-exec-1] INFO  o.p.myhome.myhome2.controller.BookMarkController - 用户没有登陆
+2024-03-17 17:47:47.907 [http-nio-8001-exec-9] INFO  o.p.myhome.myhome2.controller.BookMarkController - 用户登陆...
+2024-03-17 17:52:23.907 [main] INFO  org.pengwt.myhome.myhome2.Myhome2Application - Starting Myhome2Application using Java 1.8.0_392 on peng-moble with PID 14558 (/home/peng/IdeaProjects/myhome2/target/classes started by peng in /home/peng/IdeaProjects/myhome2)
+2024-03-17 17:52:23.908 [main] INFO  org.pengwt.myhome.myhome2.Myhome2Application - No active profile set, falling back to 1 default profile: "default"
+2024-03-17 17:52:25.414 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8001 (http)
+2024-03-17 17:52:25.429 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8001"]
+2024-03-17 17:52:25.430 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-03-17 17:52:25.431 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.60]
+2024-03-17 17:52:25.517 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-03-17 17:52:25.518 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1517 ms
+2024-03-17 17:52:26.743 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-03-17 17:52:26.775 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8001"]
+2024-03-17 17:52:26.790 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8001 (http) with context path ''
+2024-03-17 17:52:26.806 [main] INFO  org.pengwt.myhome.myhome2.Myhome2Application - Started Myhome2Application in 3.453 seconds (JVM running for 5.843)
+2024-03-17 17:52:26.914 [RMI TCP Connection(1)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-03-17 17:52:26.914 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-03-17 17:52:26.916 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-03-17 17:52:38.724 [http-nio-8001-exec-1] INFO  o.p.myhome.myhome2.controller.BookMarkController - 用户没有登陆
