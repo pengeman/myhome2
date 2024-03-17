@@ -3,8 +3,16 @@ server:
 
 logging:
   level:
-    java:
-    org:pengwt:myhome:myhome2:dao: DEBUG
+    org.pengwt.myhome.myhome2.dao: DEBUG
+    org.pengwt.myhome.myhome2.daoimpl: DEBUG
+
+
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
 spring:
   application:
     name: myhome
