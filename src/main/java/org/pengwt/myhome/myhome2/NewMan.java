@@ -6,9 +6,7 @@ import lombok.val;
 import org.pengwt.myhome.myhome2.dao.BookMarkDao;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,14 +48,26 @@ public class NewMan {
         log.info("file_url: {}", file_url);
         log.info("file_db: {}", file_db);
         try {
-            if (!file_url.exists()) {
+            if (file_url.exists()) {
+                // 如果db存在
+                String sqlProfile = getSqlConfigPath();
+                Properties pro = new Properties();
+                pro.load(new FileInputStream(new File(sqlProfile)));
+                String ver1 = pro.getProperty("ver");
+                int oldver = Integer.parseInt(ver1);
+                if (oldver < ver) {
+                    // 小于当前版本
+                    int newVer = ver;
+                    updateVer(newVer, oldver);
+                } else {
+                    return;
+                }
+            } else {
                 file_url.mkdirs();
                 log.info("mkdirs {}", file_url);
-                //file_db.createNewFile();
-
+                createDB(ver);
+                createSqlConfig(ver);
             }
-            createDB(ver);
-            createSqlConfig(ver);
         } catch (Exception e) {
             log.error("firstone error", e);
             throw new RuntimeException(e);
@@ -76,11 +86,7 @@ public class NewMan {
     }
 
     private void updatever1() {
-        createTable();
-        alterTable();
-        upVerTo(2);
-//        CREATE TABLE user(id integer not null primary key autoincrement ,name char,pwd char);
-//        alter table cc add column userid int;
+
 
     }
 
@@ -134,7 +140,7 @@ public class NewMan {
         // 因为无法通过 new File 来访问jar中的文件, 所以使用流
         val srcfile = Resources.getResourceAsStream("mapper/" + FILE_DB);
         File descFile = new File(DATA_DIR + FILE_DB);
-        if (descFile.exists()){
+        if (descFile.exists()) {
             descFile.delete();
         }
         Files.copy(srcfile, descFile.toPath());

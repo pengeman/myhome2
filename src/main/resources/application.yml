@@ -3,8 +3,8 @@ server:
 
 logging:
   level:
-    org.pengwt.myhome.myhome2.dao: DEBUG
-    org.pengwt.myhome.myhome2.daoimpl: DEBUG
+    org.pengwt.myhome.myhome2.dao: INFO
+    org.pengwt.myhome.myhome2.daoimpl: INFO
 
 
 

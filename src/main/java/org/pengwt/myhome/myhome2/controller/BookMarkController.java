@@ -1,5 +1,6 @@
 package org.pengwt.myhome.myhome2.controller;
 //202403171700
+
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.sun.org.apache.xpath.internal.operations.Mod;
@@ -78,11 +79,12 @@ public class BookMarkController {
     public String dosetup(HttpServletRequest request) {
         //@RequestParam(name="name") String name , @RequestParam(name="url") String url
         String name = request.getParameter("name");
-        String url = request.getParameter("user");
-        String username = (String) request.getSession().getAttribute("user");
-        User user = bookMarkService.getUserByName(username);
-        BookMark bookMark = new BookMark(name, url, user.getId());
-        boolean r = this.bookMarkService.saveBookMark(bookMark);
+        String url = request.getParameter("url");
+
+
+        int userid = (int) request.getSession().getAttribute("userid");
+        BookMark bookMark = new BookMark(name, url, userid);
+        boolean r = this.bookMarkService.saveBookMark(bookMark, userid);
         String s = "新增书签 成功" + r;
         return JSON.toJSONString(s);
     }

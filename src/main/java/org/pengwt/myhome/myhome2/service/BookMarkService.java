@@ -12,8 +12,11 @@ public interface BookMarkService {
 
     public List<BookMark> getAllBookMarksByUserid(int userid);
 
-    public boolean saveBookMark(String name,String url);
-    public boolean saveBookMark(BookMark bookMark);
+
+
+    boolean saveBookMark(String name, String url, int userid);
+
+    public boolean saveBookMark(BookMark bookMark, int userid);
 
     public void uploadBookMark(String bookmark);
 

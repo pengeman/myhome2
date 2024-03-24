@@ -26,15 +26,15 @@ public class BookMarkServiceImpl implements BookMarkService {
     }
 
     @Override
-    public boolean saveBookMark(String name, String url) {
-        return bookMarkDao.saveBookMark(name, url);
+    public boolean saveBookMark(String name, String url, int userid) {
+        return bookMarkDao.saveBookMark(name, url , userid);
     }
 
     @Override
-    public boolean saveBookMark(BookMark bookMark) {
+    public boolean saveBookMark(BookMark bookMark, int userid) {
         String name = bookMark.getName();
         String url = bookMark.getUrl();
-        return this.saveBookMark(name, url);
+        return this.saveBookMark(name, url, userid);
     }
 
     @Override
