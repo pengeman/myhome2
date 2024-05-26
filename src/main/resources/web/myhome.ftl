@@ -72,13 +72,13 @@ title,
     <div class="box_cnt sstool">
         <ul>
             <li>
-                <a href="http://huoche.youabc.cn/" target="_blank" title="在途网">火车时刻</a>
-                <a href="http://tools.2345.com/changtu.htm?0" target="_blank">长途客运</a>
-                <a href="http://tools.2345.com/bus.htm" target="_blank">公交线路</a>
+                <a href="https://www.fliggy.com/" target="_blank" title="定机票火车票酒店">飞猪旅行</a>
+                <a href="https://www.lddgo.net/index" target="_blank">在线工具</a>
+                <a href="https://www.bootschool.net/ascii-art" target="_blank">ascii艺术</a>
                 <br />
                 <a href="http://tools.2345.com/weizhang.htm" target="_blank">交通违章</a>
                 <a href="http://tools.2345.com/carlist.htm" target="_blank">查车牌号</a>
-                <a href="http://tools.2345.com/kaojia.htm" target="_blank">考驾查询</a>
+                <a href="https://www.lddgo.net/index" target="_blank">ascii艺术</a>
                 <br />
                 <a href="http://tools.2345.com/shouji.htm" target="_blank">手机归属</a>
                 <a href="http://tools.2345.com/shenfenzheng.htm" target="_blank">查身份证</a>
