@@ -85,7 +85,7 @@ public class BookMarkController {
         int userid = (int) request.getSession().getAttribute("userid");
         BookMark bookMark = new BookMark(name, url, userid);
         boolean r = this.bookMarkService.saveBookMark(bookMark, userid);
-        String s = "新增书签 成功" + r;
+        String s = "新增书签 成功" + r ;
         return JSON.toJSONString(s);
     }
 

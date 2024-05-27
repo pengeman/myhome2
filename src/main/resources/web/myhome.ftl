@@ -170,6 +170,7 @@ title,
         </tbody>
     </table>
 </form>
+<div><textarea rows="30" cols="90"></textarea></div>
 <div class="hide"></div>
 
 <div id="footer">${footer_var}</div>
