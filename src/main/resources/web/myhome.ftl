@@ -72,7 +72,7 @@ title,
     <div class="box_cnt sstool">
         <ul>
             <li>
-                <a href="https://www.fliggy.com/" target="_blank" title="定机票火车票酒店">飞猪旅行</a>
+                <a href="https://www.12306.cn/index/" target="_blank" title="定机票火车票酒店">12306</a>
                 <a href="https://www.lddgo.net/index" target="_blank">在线工具</a>
                 <a href="https://www.bootschool.net/ascii-art" target="_blank">ascii艺术</a>
                 <br />
@@ -88,19 +88,19 @@ title,
                 <a href="http://tools.2345.com/youbian.htm" target="_blank">邮编查询</a>
                 <a href="http://tools.2345.com/huafcx.htm" target="_blank">话费查询</a>
                 <br />
-                <a href="http://fanyi.youdao.com/" target="_blank">有道翻译</a>
+                <a href="http://dict.youdao.com/" target="_blank">有道英汉</a>
                 <a href="http://www.jd.com" target="_blank">京东京东</a>
                 <a href="http://www.taobao.com" target="_blank">淘宝淘宝</a>
                 <br />
                 <a href="https://www.processon.com/diagrams" target="_blank">在线 uml</a>
-                <a href="http://tools.2345.com/lilv.htm" target="_blank">银行利率</a>
+                <a href="https://mvnrepository.com/" target="_blank">maven仓库</a>
                 <a href="http://sucicada.cf:800/" target="_blank">sucicada</a>
                 <br />
                 <a href="http://fanyi.youdao.com/" target="_blank">在线翻译</a>
-                <a href="http://tools.2345.com/zidcd.htm" target="_blank">新华字典</a>
+                <a href="https://www.cilixiong.com/" target="_blank">磁力熊</a>
                 <a href="http://tools.2345.com/jishunqi.htm" target="_blank">在线计算</a>
                 <br />
-                <a href="http://my.2345.com/member/edit_info.php" target="_blank">我的工具</a>
+                <a href="https://www.shiguangxu.com/" target="_blank">时光序</a>
                 <a href="http://blog.chinaunix.net/" title="chinaunix" target="_blank">我的博客</a>
                 <a href="http://www.xnote.cn/note/category/" title="xnote" target="_blank">在线笔记</a>
                 <br/>
