@@ -10,6 +10,8 @@ import org.pengwt.myhome.myhome2.entity.User;
 import org.pengwt.myhome.myhome2.service.BookMarkService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -162,5 +164,23 @@ public class BookMarkController {
             md.setViewName("login");
             return md;
         }
+    }
+
+    @GetMapping(value="parrot")
+    /**
+     * 进入鹦鹉记账模块
+     */
+    public ModelAndView parrot(){
+        ModelAndView mv = new ModelAndView();
+
+        mv.addObject("title","鹦鹉记账");
+        HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
+        Integer userid = (Integer)request.getSession().getAttribute("userid");
+        if (userid == null){
+            mv.setViewName("");
+        }else {
+            mv.setViewName("parrot");
+        }
+        return mv;
     }
 }

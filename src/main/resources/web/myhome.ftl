@@ -80,7 +80,7 @@ title,
                 <a href="http://tools.2345.com/carlist.htm" target="_blank">查车牌号</a>
                 <a href="https://www.lddgo.net/index" target="_blank">ascii艺术</a>
                 <br />
-                <a href="http://tools.2345.com/shouji.htm" target="_blank">手机归属</a>
+                <a href="https://www.congminglingxi.com/" target="_blank" title="AI写作">聪明灵犀</a>
                 <a href="http://tools.2345.com/shenfenzheng.htm" target="_blank">查身份证</a>
                 <a href="https://www.processon.com/diagrams" target="_blank">在线UML</a>
                 <br />
