@@ -1,0 +1,18 @@
+version: 2.1
+
+orbs:
+  self_runner: sucicada/self-runner-env@0.0.3
+
+jobs:
+  build:
+    executor: self_runner/my-custom-executor
+    steps:
+      - checkout
+      - self_runner/setup
+      - run: |
+          sumake docker-run-remote
+
+workflows:
+  deploy:
+    jobs:
+      - build
