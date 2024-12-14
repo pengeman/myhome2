@@ -34,5 +34,5 @@ build/
 /applogs/
 /logs/
 /log.path_IS_UNDEFINED
-/.env.make
+/.env.*
 /.idea

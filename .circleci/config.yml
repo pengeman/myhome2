@@ -7,7 +7,8 @@ jobs:
   build:
     executor: self_runner/my-custom-executor
     steps:
-      - checkout
+      - run: |
+          git clone https://github.com/pengeman/myhome2.git --depth 1 -b release
       - self_runner/setup
       - run: |
           sumake docker-run-remote

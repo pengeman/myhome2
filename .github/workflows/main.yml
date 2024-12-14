@@ -1,4 +1,4 @@
-name: build and deploy
+name: request to circleci to deploy
 on:
   push:
     branches:
@@ -7,123 +7,44 @@ jobs:
   job_build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      CIRCLE_TOKEN: ${{ secrets.CIRCLE_TOKEN }}
+      ORG_PROJECT_ID: ${{ secrets.ORG_PROJECT_ID }}
+      DEFINITION_ID: ${{ secrets.DEFINITION_ID }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '8'
-          cache: 'maven'
+      - name: Trigger CircleCI Pipeline  
+        shell: bash
+        run: |
+          PIPELINE_ID=$(curl -X POST https://circleci.com/api/v2/project/gh/$ORG_PROJECT_ID/pipeline/run \
+            --header "Circle-Token: $CIRCLE_TOKEN" \
+            --header "content-type: application/json" \
+            --data '{
+            "definition_id": "'"$DEFINITION_ID"'",
+            "config": {"branch": "circleci-project-setup"},
+            "checkout": {"branch": "circleci-project-setup"}
+          }' | jq -r '.id')
+          echo "PIPELINE_ID=$PIPELINE_ID" >> $GITHUB_ENV
+          echo "Pipeline triggered with ID: $PIPELINE_ID"
 
-      - name: Build with Maven
-        run: mvn clean package -Dmaven.test.skip=true -T4
-#      - run: pwd && ls -lR
-      #  job_deploy:
-      #    needs: job_build
-      #    using: "composite"
-      #    steps:
-      #      - name: scp
-      #        uses: garygrossgarten/github-action-scp@release
-      #        with:
-      #          host: ${{ secrets.DEPLOY_HOST }}
-      #          username: ${{ secrets.USERNAME }}
-      #          password: ${{ secrets.PASSWORD }}
-      #          local: ./target/myhome2-0.0.1-SNAPSHOT.jar
-      #          remote: "~/APP/myhome2/"
-      - uses: marcodallasanta/ssh-scp-deploy@v1.2.0
-        with:
-#          local: './target/myhome2.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
-#          remote: '~/APP/myhome2/'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
-          local: './deploy/myhome2.ini'
-          remote: '/home/peng/etc/supervisor/conf.d/'
-          host: ${{secrets.DEPLOY_HOST}}                                      # Remote server address - REQUIRED true
-          user: ${{secrets.USERNAME}}                                      # Remote server user - REQUIRED true
-          password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
-          pre_upload: mkdir -p ~/APP/myhome2/
-          scp_options: -vvvv                                              # Flags to use during scp - REQUIRED false - DEFAULT ''
-#                    ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-      #      - name: scp
-      #        run: |
-      #          sudo apt install sshpass
-      #          sshpass -p ${{secrets.PASSWORD}} scp -o StrictHostKeyChecking=no ./target/myhome2-0.0.1-SNAPSHOT.jar \
-      #            ${{secrets.USERNAME}}@${{secrets.DEPLOY_HOST}}:~/APP/myhome2/myhome2-0.0.1-SNAPSHOT.jar.new
+      - name: Wait for Pipeline to Finish
+        shell: bash
+        run: |
+          url="https://circleci.com/api/v2/pipeline/${PIPELINE_ID}/workflow?circle-token=${CIRCLE_TOKEN}"
+          echo "Checking pipeline status at: $url"
+          STATUS=$(curl -s "$url" | jq -r '.items[].status')
 
+          while [ "$STATUS" == "running" ]; do
+            echo "Pipeline still running..."
+            sleep 10
+            STATUS=$(curl -s "$url" | jq -r '.items[].status')
+          done
 
-#     之所以兜这么大一个圈子， 是因为 github action 拷贝到内陆机器，速度十分十分慢
-      - name: Delete older release
-        uses: dev-drprasad/delete-older-releases@v0.2.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          keep_latest: 0
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: myhome2.jar
-          release_name: myhome2.jar
-          draft: false
-          prerelease: false
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./target/myhome2.jar
-          asset_name: myhome2.jar
-          asset_content_type: application/zip
-
-      - name: ssh run
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          script: |
-            set -e 
-            mkdir -p ~/APP/myhome2
-            wget https://github.com/${{github.repository}}/releases/download/myhome2.jar/myhome2.jar -O ~/APP/myhome2/myhome2.jar.new
-            mv ~/APP/myhome2/myhome2.jar.new ~/APP/myhome2/myhome2.jar
-            ~/bin/supervisorctl.sh update
-            ~/bin/supervisorctl.sh restart myhome2
-#            source ~/.bashrc && \
-#            source suproxy v2ray && \
-#            env | grep proxy &&  \
-            #            export http_proxy=http://localhost:7890
-            #            export https_proxy=http://localhost:7890
-            #            export all_proxy=http://localhost:7890
-
-
-      - name: send telegram message on success
-        if: success()
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          format: markdown
-          disable_web_page_preview: true
-          message: |
-            *[Build SUCCESS]* ${{ github.repository }}
-
-            Commit message: ${{ github.event.commits[0].message }}
-
-            [See Changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
-
-      - name: send telegram message on failure
-        if: failure()
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          format: markdown
-          disable_web_page_preview: true
-          message: |
-            *[Build FAILURE]* ${{ github.repository }}
-
-            [See Error Log](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
+          echo "Pipeline completed with status: $STATUS"
+          if [[ "$STATUS" == "success" ]]; then
+            echo "Proceeding with build, as triggered pipeline was success"
+            exit 0
+          else
+            echo "Stopping build, triggered pipeline was not a success"
+            exit 1
+          fi
