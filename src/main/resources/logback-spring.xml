@@ -53,7 +53,7 @@
             onMismatch="DENY" 表示不匹配该级别以下的
         -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>debug</level>
+            <level>warn</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>

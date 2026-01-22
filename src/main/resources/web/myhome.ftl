@@ -82,7 +82,7 @@ title,
                 <br />
                 <a href="https://www.congminglingxi.com/" target="_blank" title="AI写作">聪明灵犀</a>
                 <a href="http://tools.2345.com/shenfenzheng.htm" target="_blank">查身份证</a>
-                <a href="https://www.processon.com/diagrams" target="_blank">在线UML</a>
+                <a href="https://web.shiguangxu.com/ target="_blank">时光序</a>
                 <br />
                 <a href="http://tools.2345.com/kuaidi.htm" target="_blank">快递查询</a>
                 <a href="http://tools.2345.com/youbian.htm" target="_blank">邮编查询</a>
@@ -170,7 +170,7 @@ title,
         </tbody>
     </table>
 </form>
-<div><textarea rows="30" cols="90"></textarea></div>
+<div><textarea rows="15" cols="40" style="border:1px solid lime;font-size: 22px;"></textarea></div>
 <div class="hide"></div>
 
 <div id="footer">${footer_var}</div>

@@ -166,7 +166,7 @@ public class BookMarkController {
         }
     }
 
-    @GetMapping(value="parrot")
+    @GetMapping(value="/parrot")
     /**
      * 进入鹦鹉记账模块
      */
@@ -175,12 +175,27 @@ public class BookMarkController {
 
         mv.addObject("title","鹦鹉记账");
         HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
-        Integer userid = (Integer)request.getSession().getAttribute("userid");
-        if (userid == null){
-            mv.setViewName("");
-        }else {
+        HttpSession session = request.getSession();
+        // todo 判断是否登录
+        String user = (String) session.getAttribute("username");
+        if (user == null) {
+            log.info("用户没有登陆");
+            mv.setViewName("/gologin");
+        } else {
             mv.setViewName("parrot");
         }
+        return mv;
+    }
+    @PostMapping(value = "/doParrot")
+    public String doParrot(){
+        // 保存记住数据
+        return "";
+    }
+
+    @GetMapping(value = "parrotList")
+    public ModelAndView parrotList(){
+        ModelAndView mv = new ModelAndView();
+        
         return mv;
     }
 }
