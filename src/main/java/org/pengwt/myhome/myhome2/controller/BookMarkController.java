@@ -3,7 +3,7 @@ package org.pengwt.myhome.myhome2.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+//import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.log4j.Log4j2;
 import org.pengwt.myhome.myhome2.entity.BookMark;
 import org.pengwt.myhome.myhome2.entity.User;
@@ -15,7 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import javax.jws.WebParam;
+//import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -196,6 +196,14 @@ public class BookMarkController {
     public ModelAndView parrotList(){
         ModelAndView mv = new ModelAndView();
         
+        return mv;
+    }
+
+     @GetMapping(value = "/a")
+    public ModelAndView a(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("a");
+
         return mv;
     }
 }

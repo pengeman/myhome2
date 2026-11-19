@@ -24,7 +24,7 @@
 		<mysql.version>5.1.47</mysql.version>
 		<mybatis.spring.boot.version>1.3.0</mybatis.spring.boot.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
-		<spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
+		<spring-clocud-alibaba.version>2.2.3.RELEASE</spring-clocud-alibaba.version>
 		<spring.boot.version>2.6.6</spring.boot.version>
 		<mysql-connector-java.version>8.0.21</mysql-connector-java.version>
 		<dynamic-datasource-spring-boot-starter.version>3.2.0</dynamic-datasource-spring-boot-starter.version>

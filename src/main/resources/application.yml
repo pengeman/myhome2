@@ -1,9 +1,9 @@
 server:
   port: 8001
 
-logging:
+cging:
   level:
-    org.pengwt.myhome.myhome2.dao: INFO
+    org.pengwt.mychome.myhome2.dao: INFO
     org.pengwt.myhome.myhome2.daoimpl: INFO
 
 

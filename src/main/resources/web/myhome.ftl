@@ -1,516 +1,608 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html id="html" xmlns="http://www.w3.org/1999/xhtml">
-<#--  要替换的参数
-title,
--->
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <#-- 要替换的参数: title, rows, footer_var -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base target="_blank" />
     <title>${title}</title>
-
+    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.js"></script>
     <style>
-        *{margin:1px;padding:1px;list-style:none;border:1px;}
-        body{background:#fffbe6;}
-        .content{border:3px solid #ddd;width:455px;margin-left:20px;margin-top: 50px;float:left;}
-        .datetable{border-top:1px solid #ccc;border-left:1px solid #ccc;background:#fff;}
-        .datetable td{border-bottom:1px solid #ccc;border-right:1px solid #ccc;text-align:center;}
-        .datetable thead{background:#006600;}
-        .datetable thead td{padding:10px 5px;font:normal 12px/normal 'microsoft yahei';color:#fff;text-align:center;}
-        .datetable thead td span{padding:0 5px;}
-        .datetable tbody td{padding:5px 3px;font-size:12px;}
-        .cpic {width: 100px; height: 40px;}
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 24px 24px 48px;
+            background: #f4f6f9;
+            color: #263238;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        .hide {
+            display: none;
+        }
 
+        /* 页面主容器 */
+        .page-container {
+            max-width: 1320px;
+            margin: 0 auto;
+        }
+
+        /* 顶部搜索区 */
+        .search-section {
+            background: #fff;
+            padding: 20px 24px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .search-logos {
+            margin-bottom: 12px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+        }
+        .search-logos img {
+            max-height: 44px;
+        }
+        .search-bar {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            max-width: 660px;
+            margin-bottom: 10px;
+        }
+        .search-input {
+            flex: 1;
+            height: 38px;
+            padding: 0 12px;
+            border: 1px solid #f5b7c2;
+            border-radius: 6px;
+            background-color: #FDD6DC;
+            font-size: 15px;
+            outline: none;
+        }
+        .search-input:focus {
+            border-color: #e87a90;
+        }
+        .search-btn {
+            height: 38px;
+            padding: 0 18px;
+            border: 1px solid #f5b7c2;
+            border-radius: 6px;
+            background-color: #FDD6DC;
+            cursor: pointer;
+            font-weight: bold;
+            color: #333;
+        }
+        .search-btn:hover {
+            background-color: #fbc3cc;
+        }
+        .clear-btn {
+            height: 38px;
+            padding: 0 14px;
+            border: 1px solid #dce3ec;
+            border-radius: 6px;
+            background: #f4f6f9;
+            cursor: pointer;
+            color: #555;
+        }
+        .clear-btn:hover {
+            background: #e8eef5;
+        }
+        .search-options {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+            color: #546e7a;
+        }
+        .search-options label {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .version-tag {
+            font-size: 12px;
+            color: #90a4ae;
+            margin-right: 8px;
+        }
+
+        /* 下方左右分栏布局 */
+        .main-grid {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        /* 左侧栏：实用查询 + 便签 */
+        .sidebar {
+            width: 340px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+        .card h2 {
+            margin: 0 0 14px;
+            font-size: 18px;
+            color: #263238;
+            border-bottom: 1px solid #edf0f2;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* 实用查询网格 */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px 8px;
+        }
+        .links-grid a {
+            text-decoration: none;
+            color: #37474f;
+            font-size: 13px;
+            padding: 6px 4px;
+            border-radius: 6px;
+            text-align: center;
+            background: #f8fafc;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            transition: background 0.15s, color 0.15s;
+        }
+        .links-grid a:hover {
+            background: #eaf3ff;
+            color: #1976d2;
+        }
+
+        /* 临时便签 */
+        .memo-status {
+            font-size: 12px;
+            font-weight: normal;
+            color: #4caf50;
+        }
+        .memo-box {
+            width: 100%;
+            height: 240px;
+            padding: 12px;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+            background: #fafffa;
+            font-family: inherit;
+            font-size: 15px;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+        }
+        .memo-box:focus {
+            border-color: #66bb6a;
+        }
+
+        /* 右侧主栏：日历组件 */
+        .calendar {
+            flex: 1;
+            min-width: 0;
+            padding: 24px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+        .calendar header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .calendar h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+        .calendar button {
+            padding: 8px 14px;
+            border: 0;
+            border-radius: 6px;
+            background: #e8eef5;
+            cursor: pointer;
+        }
+        .calendar button:hover {
+            background: #d7e3ef;
+        }
+        .weekdays, .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+        .weekdays div {
+            padding: 12px 4px;
+            text-align: center;
+            color: #65727e;
+            font-weight: bold;
+        }
+        .day {
+            min-height: 88px;
+            padding: 8px;
+            border: 1px solid #edf0f2;
+            cursor: pointer;
+        }
+        .day:hover {
+            background: #f5f9ff;
+        }
+        .day.other-month {
+            color: #b7bec5;
+            background: #fafbfc;
+        }
+        .day.today {
+            outline: 2px solid #4788e8;
+            outline-offset: -2px;
+        }
+        .day.selected {
+            background: #eaf3ff;
+        }
+        .solar-day {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .lunar-day {
+            margin-top: 5px;
+            color: #77838d;
+            font-size: 12px;
+        }
+        .event {
+            margin-top: 4px;
+            overflow: hidden;
+            color: #d65b45;
+            font-size: 11px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .detail {
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 8px;
+            background: #f7f9fb;
+            line-height: 1.8;
+        }
+
+        /* 底部状态栏 */
+        #footer {
+            height: 24px;
+            line-height: 24px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding-right: 12px;
+            text-align: right;
+            background: rgba(187, 51, 51, 0.2);
+            color: #7766ff;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* 响应式适配：小屏幕下自动转为上下单栏 */
+        @media (max-width: 900px) {
+            .main-grid {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+            }
+            .calendar {
+                width: 100%;
+                padding: 16px;
+            }
+        }
+        @media (max-width: 600px) {
+            body { padding: 12px 12px 40px; }
+            .day { min-height: 72px; padding: 5px; }
+            .event { font-size: 10px; }
+        }
     </style>
-<style type="text/css">
-    body{overflow: auto}
-    #tcss{ width:400px; overflow:hidden}
-    .left{ float:left; width:180px; border:1px solid #F00}
-    .right{ float:right; width:200px; border:1px solid #00F}
-    #footer {
-        height: 20px;
-        line-height: 20px;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        text-align: right;
-        background: #b333;
-        color: #7766ff;
-        font-family: Arial;
-        font-size: 12px;
-        letter-spacing: 1px;
-    }
-    .hide {
-        display: none;
-    }
-</style>
 </head>
-<body onload="initial();" >
 
-<!-- 百度搜索 -->
-<form action="https://www.baidu.com/s" method="get" target="_blank" id="form1"  >
-    <div>
-        <a href="https://www.baidu.com/" id="s1" style="display: block"><img src="image/baidu2.png" class="cpic" ></a>
-        <a href="https://www4.bing.com/" id="s2" style="display: none"><img src="image/binglog.jpeg" class="cpic" ></a>
-        <a href="https://www.google.com/" id="s3" style="display: none"><img src="image/google.png" class="cpic" ></a>
+<body>
+    <div class="page-container">
+        <!-- 顶部搜索引擎区域 -->
+        <form action="https://www.baidu.com/s" method="get" target="_blank" id="form1" class="search-section">
+            <div class="search-logos">
+                <a href="https://www.baidu.com/" id="s1" style="display: block;"><img src="image/baidu2.png" alt="百度" /></a>
+                <a href="https://www4.bing.com/" id="s2" style="display: none;"><img src="image/binglog.jpeg" alt="Bing" /></a>
+                <a href="https://www.google.com/" id="s3" style="display: none;"><img src="image/google.png" alt="Google" /></a>
+            </div>
 
-        <input type="text" name="word" id="word" style="width:500px;height:30px;background-color: #FDD6DC">
-        <input type="submit" class="ss_btn" id="search_btn" style="width:40px;height:30px;background-color:#FDD6DC"  value="搜 索">
-        <input type="button" value="clear" onclick="javascript:cls();"><br/>
-        <input type="radio" id = "r1"  name="x" value=" " onclick="radioClicked(1)" checked="checked"><label for="r1">百度</label>
-        <input type="radio"  id = "r2" name="x" value=" " onclick="radioClicked(2)"><label for="r2">Bing</label>
-        <input type="radio"  id = "r3" name="x" value=" " onclick="radioClicked(3)"><label for="r3">Google</label>
+            <div class="search-bar">
+                <input type="text" name="word" id="word" class="search-input" placeholder="输入搜索关键词..." />
+                <input type="submit" id="search_btn" class="search-btn" value="搜 索" />
+                <input type="button" class="clear-btn" value="清空" onclick="cls()" />
+            </div>
+
+            <div class="search-options">
+                <span class="version-tag">ver 20261115</span>
+                <label><input type="radio" id="r1" name="engine" onclick="radioClicked(1)" checked="checked" /> 百度</label>
+                <label><input type="radio" id="r2" name="engine" onclick="radioClicked(2)" /> Bing</label>
+                <label><input type="radio" id="r3" name="engine" onclick="radioClicked(3)" /> Google</label>
+            </div>
+        </form>
+
+        <!-- 下方左右分栏主体 -->
+        <div class="main-grid">
+            <!-- 左侧边栏：实用查询 + 临时便签 -->
+            <aside class="sidebar">
+                <div class="card">
+                    <h2>实用查询</h2>
+                    <div class="links-grid">
+                        <a href="https://www.12306.cn/index/" title="定机票火车票酒店">12306</a>
+                        <a href="https://www.lddgo.net/index">在线工具</a>
+                        <a href="https://www.bootschool.net/ascii-art">ascii艺术</a>
+                        <a href="http://tools.2345.com/weizhang.htm">交通违章</a>
+                        <a href="http://tools.2345.com/carlist.htm">查车牌号</a>
+                        <a href="https://www.lddgo.net/index">ascii艺术</a>
+                        <a href="https://www.congminglingxi.com/" title="AI写作">聪明灵犀</a>
+                        <a href="http://tools.2345.com/shenfenzheng.htm">查身份证</a>
+                        <a href="https://web.shiguangxu.com/">时光序</a>
+                        <a href="http://tools.2345.com/kuaidi.htm">快递查询</a>
+                        <a href="http://tools.2345.com/youbian.htm">邮编查询</a>
+                        <a href="http://tools.2345.com/huafcx.htm">话费查询</a>
+                        <a href="http://dict.youdao.com/">有道英汉</a>
+                        <a href="http://www.jd.com">京东</a>
+                        <a href="http://www.taobao.com">淘宝</a>
+                        <a href="https://www.processon.com/diagrams">在线 uml</a>
+                        <a href="https://mvnrepository.com/">maven仓库</a>
+                        <a href="http://sucicada.cf:800/">sucicada</a>
+                        <a href="http://fanyi.youdao.com/">在线翻译</a>
+                        <a href="https://www.cilixiong.com/">磁力熊</a>
+                        <a href="http://tools.2345.com/jishunqi.htm">在线计算</a>
+                        <a href="https://www.shiguangxu.com/">时光序</a>
+                        <a href="http://blog.chinaunix.net/" title="chinaunix">我的博客</a>
+                        <a href="http://www.xnote.cn/note/category/" title="xnote">在线笔记</a>
+                        <a href="https://www.speedtest.cn" title="speedtest">在线测速</a>
+                        <a href="https://www.cnblogs.com/" title="cnblogs">我的博客</a>
+                        <a href="https://home.zoho.com.cn/home">zoho笔记</a>
+                        <#if rows??>
+                            <#list rows as bookmark>
+                                <a href="${bookmark.url}" title="${bookmark.name}">${bookmark.name}</a>
+                            </#list>
+                        </#if>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>
+                        <span>临时便签</span>
+                        <span id="memoStatus" class="memo-status">已同步本地</span>
+                    </h2>
+                    <textarea id="memoInput" class="memo-box" placeholder="在此输入临时笔记，内容会自动保存在浏览器本地..."></textarea>
+                </div>
+            </aside>
+
+            <!-- 右侧主栏：农历日历 -->
+            <main class="calendar">
+                <header>
+                    <button id="prev" type="button">上个月</button>
+                    <h1 id="monthTitle"></h1>
+                    <button id="next" type="button">下个月</button>
+                </header>
+
+                <div class="weekdays">
+                    <div>星期一</div><div>星期二</div><div>星期三</div>
+                    <div>星期四</div><div>星期五</div><div>星期六</div><div>星期日</div>
+                </div>
+                <div class="days" id="days"></div>
+                <section class="detail" id="detail"></section>
+            </main>
+        </div>
     </div>
-</form>
-<!-- 百度搜索 end -->
 
-<div class="box" style="top:100px; float:left;">
+    <div class="hide"></div>
+    <div id="footer">${footer_var}</div>
 
-    <!-- search tools -->
+    <script>
+    <#noparse>
+        // 1. 搜索引擎切换与清空
+        function cls() {
+            const wordInput = document.getElementById("word");
+            wordInput.value = "";
+            wordInput.focus();
+        }
 
-    <h2>实用查询</h2>
-    <div class="box_cnt sstool">
-        <ul>
-            <li>
-                <a href="https://www.12306.cn/index/" target="_blank" title="定机票火车票酒店">12306</a>
-                <a href="https://www.lddgo.net/index" target="_blank">在线工具</a>
-                <a href="https://www.bootschool.net/ascii-art" target="_blank">ascii艺术</a>
-                <br />
-                <a href="http://tools.2345.com/weizhang.htm" target="_blank">交通违章</a>
-                <a href="http://tools.2345.com/carlist.htm" target="_blank">查车牌号</a>
-                <a href="https://www.lddgo.net/index" target="_blank">ascii艺术</a>
-                <br />
-                <a href="https://www.congminglingxi.com/" target="_blank" title="AI写作">聪明灵犀</a>
-                <a href="http://tools.2345.com/shenfenzheng.htm" target="_blank">查身份证</a>
-                <a href="https://web.shiguangxu.com/ target="_blank">时光序</a>
-                <br />
-                <a href="http://tools.2345.com/kuaidi.htm" target="_blank">快递查询</a>
-                <a href="http://tools.2345.com/youbian.htm" target="_blank">邮编查询</a>
-                <a href="http://tools.2345.com/huafcx.htm" target="_blank">话费查询</a>
-                <br />
-                <a href="http://dict.youdao.com/" target="_blank">有道英汉</a>
-                <a href="http://www.jd.com" target="_blank">京东京东</a>
-                <a href="http://www.taobao.com" target="_blank">淘宝淘宝</a>
-                <br />
-                <a href="https://www.processon.com/diagrams" target="_blank">在线 uml</a>
-                <a href="https://mvnrepository.com/" target="_blank">maven仓库</a>
-                <a href="http://sucicada.cf:800/" target="_blank">sucicada</a>
-                <br />
-                <a href="http://fanyi.youdao.com/" target="_blank">在线翻译</a>
-                <a href="https://www.cilixiong.com/" target="_blank">磁力熊</a>
-                <a href="http://tools.2345.com/jishunqi.htm" target="_blank">在线计算</a>
-                <br />
-                <a href="https://www.shiguangxu.com/" target="_blank">时光序</a>
-                <a href="http://blog.chinaunix.net/" title="chinaunix" target="_blank">我的博客</a>
-                <a href="http://www.xnote.cn/note/category/" title="xnote" target="_blank">在线笔记</a>
-                <br/>
-                <a href="https://www.speedtest.cn" title="speedtest" target="_blank" >在线测速</a>
-                <a href="https://www.cnblogs.com/" title="cnblogs" target="_blank">我的博客</a>
-                <a href="https://home.zoho.com.cn/home" target="_blank">zoho笔记</a><br/>
-                <#if rows??>
-                <#list rows as bookmark >
-                    <a href="${bookmark.url}" target="_blank" title="${bookmark.name}">${bookmark.name}</a>
-                    <#if (bookmark_index + 1) % 3 == 0 ><br/></#if>
-                </#list>
-                </#if>
-            </li>
-        </ul>
-        <h4>
-              <span>
+        function radioClicked(engineIndex) {
+            const configs = {
+                1: { logoId: "s1", paramName: "word", action: "https://www.baidu.com/s" },
+                2: { logoId: "s2", paramName: "q", action: "https://www4.bing.com/search" },
+                3: { logoId: "s3", paramName: "q", action: "https://www.google.com/search" }
+            };
 
-              </span>
-        </h4>
-    </div>
-</div>
+            const current = configs[engineIndex];
+            if (!current) return;
 
-<form name="CLD" class="content">
-    <h2>万年历</h2>
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datetable">
-        <thead>
-        <tr>
-            <td colSpan=7><span>公历</span>
-                <select name="SY" onchange="changeCld();" style="font-SIZE: 9pt">
-                    <script>
-                        for(i=1900;i<=2050;i++) document.write('<option>'+i + '</option>');
-                    </script>
-                </select><span>年</span>
-                <select name="SM" onchange="changeCld();" style="font-SIZE: 9pt">
-                    <script>
-                        for(i=1;i<13;i++) document.write('<option>'+i + '</option>');
-                    </script>
-                </select><span>月</span>
-                </font><span id="GZ"></span>
-            </td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr style="background:#eee;">
-            <td width="54">日</td>
-            <td width="54">一</td>
-            <td width="54">二</td>
-            <td width="54">三</td>
-            <td width="54">四</td>
-            <td width="54">五</td>
-            <td width="54">六</td>
-        </tr>
-        <script>
-            var gNum;
-            for(i=0;i<6;i++) {
-                document.write('<tr align="center">');
-                for(j=0;j<7;j++) {
-                    gNum = i*7+j;
-                    document.write('<td id="GD' + gNum +'"><font id="SD' + gNum +'" size=2 face="Arial Black"');
-                    if(j == 0) document.write('color="red"');
-                    if(j == 6) document.write('color="#000080"');
-                    document.write('></font><br/><font id="LD' + gNum + '" size=2 style="font-size:9pt"></font></td>');
+            ["s1", "s2", "s3"].forEach(id => {
+                document.getElementById(id).style.display = (id === current.logoId) ? "block" : "none";
+            });
+
+            document.getElementById("word").name = current.paramName;
+            document.getElementById("form1").action = current.action;
+        }
+
+        // 2. 临时便签 localStorage 自动保存
+        const memoInput = document.getElementById("memoInput");
+        const memoStatus = document.getElementById("memoStatus");
+        const MEMO_STORAGE_KEY = "nav_page_temp_memo";
+        let saveTimer = null;
+
+        const savedMemo = localStorage.getItem(MEMO_STORAGE_KEY);
+        if (savedMemo !== null) {
+            memoInput.value = savedMemo;
+        }
+
+        memoInput.addEventListener("input", () => {
+            memoStatus.textContent = "保存中...";
+            memoStatus.style.color = "#ff9800";
+
+            clearTimeout(saveTimer);
+            saveTimer = setTimeout(() => {
+                localStorage.setItem(MEMO_STORAGE_KEY, memoInput.value);
+                memoStatus.textContent = "已自动保存";
+                memoStatus.style.color = "#4caf50";
+            }, 300);
+        });
+
+        // 3. 农历日历渲染逻辑
+        const daysElement = document.getElementById("days");
+        const titleElement = document.getElementById("monthTitle");
+        const detailElement = document.getElementById("detail");
+
+        const today = new Date();
+        let viewYear = today.getFullYear();
+        let viewMonth = today.getMonth();
+        let selectedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+        const solarFestivals = {
+            "1-1": "元旦",
+            "2-14": "情人节",
+            "3-8": "妇女节",
+            "3-12": "植树节",
+            "4-1": "愚人节",
+            "5-1": "劳动节",
+            "5-4": "青年节",
+            "6-1": "儿童节",
+            "7-1": "建党节",
+            "8-1": "建军节",
+            "9-10": "教师节",
+            "10-1": "国庆节",
+            "12-24": "平安夜",
+            "12-25": "圣诞节"
+        };
+
+        function dateKey(date) {
+            return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+        }
+
+        function getLunarInfo(date) {
+            const solar = Solar.fromDate(date);
+            const lunar = solar.getLunar();
+
+            const lunarDay = lunar.getDayInChinese();
+            const lunarText = lunar.getDay() === 1
+                ? `${lunar.getMonthInChinese()}月`
+                : lunarDay;
+
+            const festivals = [
+                ...(solar.getFestivals?.() || []),
+                ...(lunar.getFestivals?.() || []),
+                ...(lunar.getOtherFestivals?.() || [])
+            ];
+
+            const solarFestival = solarFestivals[`${date.getMonth() + 1}-${date.getDate()}`];
+            if (solarFestival) festivals.unshift(solarFestival);
+
+            const jieQi = lunar.getJieQi?.() || "";
+            if (jieQi) festivals.unshift(jieQi);
+
+            return {
+                solar,
+                lunar,
+                lunarText,
+                jieQi,
+                festivals: [...new Set(festivals)]
+            };
+        }
+
+        function renderCalendar() {
+            titleElement.textContent = `${viewYear}年${viewMonth + 1}月`;
+            daysElement.replaceChildren();
+
+            const firstDay = new Date(viewYear, viewMonth, 1);
+            const offset = (firstDay.getDay() + 6) % 7;
+            const gridStart = new Date(viewYear, viewMonth, 1 - offset);
+
+            for (let i = 0; i < 42; i++) {
+                const date = new Date(gridStart);
+                date.setDate(gridStart.getDate() + i);
+
+                const info = getLunarInfo(date);
+                const cell = document.createElement("div");
+                cell.className = "day";
+
+                if (date.getMonth() !== viewMonth) cell.classList.add("other-month");
+                if (dateKey(date) === dateKey(today)) cell.classList.add("today");
+                if (dateKey(date) === dateKey(selectedDate)) cell.classList.add("selected");
+
+                const solarDay = document.createElement("div");
+                solarDay.className = "solar-day";
+                solarDay.textContent = date.getDate();
+
+                const lunarDay = document.createElement("div");
+                lunarDay.className = "lunar-day";
+                lunarDay.textContent = info.lunarText;
+
+                cell.append(solarDay, lunarDay);
+
+                if (info.festivals.length) {
+                    const event = document.createElement("div");
+                    event.className = "event";
+                    event.textContent = info.festivals[0];
+                    cell.appendChild(event);
                 }
-                document.write('</tr>');
-            }
-        </script>
-        </tbody>
-    </table>
-</form>
-<div><textarea rows="15" cols="40" style="border:1px solid lime;font-size: 22px;"></textarea></div>
-<div class="hide"></div>
 
-<div id="footer">${footer_var}</div>
+                cell.addEventListener("click", () => {
+                    selectedDate = new Date(date);
+                    renderCalendar();
+                    renderDetail(date);
+                });
+
+                daysElement.appendChild(cell);
+            }
+
+            renderDetail(selectedDate);
+        }
+
+        function renderDetail(date) {
+            const info = getLunarInfo(date);
+            const weekDay = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+
+            detailElement.replaceChildren();
+
+            const lines = [
+                `公历：${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${weekDay[date.getDay()]}`,
+                `农历：${info.lunar.getYearInChinese()}年${info.lunar.getMonthInChinese()}月${info.lunar.getDayInChinese()}`,
+                `干支：${info.lunar.getYearInGanZhi()}年 ${info.lunar.getMonthInGanZhi()}月 ${info.lunar.getDayInGanZhi()}日`
+            ];
+
+            for (const text of lines) {
+                const div = document.createElement("div");
+                div.textContent = text;
+                detailElement.appendChild(div);
+            }
+        }
+
+        document.getElementById("prev").addEventListener("click", () => {
+            viewMonth--;
+            if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+            renderCalendar();
+        });
+
+        document.getElementById("next").addEventListener("click", () => {
+            viewMonth++;
+            if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+            renderCalendar();
+        });
+
+        renderCalendar();
+        </#noparse>
+    </script>
 </body>
-
-
-
-
-
 </html>
-
-
-<script type="text/javascript">
-
-    var lunarInfo=new Array(
-        0x04bd8,0x04ae0,0x0a570,0x054d5,0x0d260,0x0d950,0x16554,0x056a0,0x09ad0,0x055d2,
-        0x04ae0,0x0a5b6,0x0a4d0,0x0d250,0x1d255,0x0b540,0x0d6a0,0x0ada2,0x095b0,0x14977,
-        0x04970,0x0a4b0,0x0b4b5,0x06a50,0x06d40,0x1ab54,0x02b60,0x09570,0x052f2,0x04970,
-        0x06566,0x0d4a0,0x0ea50,0x06e95,0x05ad0,0x02b60,0x186e3,0x092e0,0x1c8d7,0x0c950,
-        0x0d4a0,0x1d8a6,0x0b550,0x056a0,0x1a5b4,0x025d0,0x092d0,0x0d2b2,0x0a950,0x0b557,
-        0x06ca0,0x0b550,0x15355,0x04da0,0x0a5d0,0x14573,0x052d0,0x0a9a8,0x0e950,0x06aa0,
-        0x0aea6,0x0ab50,0x04b60,0x0aae4,0x0a570,0x05260,0x0f263,0x0d950,0x05b57,0x056a0,
-        0x096d0,0x04dd5,0x04ad0,0x0a4d0,0x0d4d4,0x0d250,0x0d558,0x0b540,0x0b5a0,0x195a6,
-        0x095b0,0x049b0,0x0a974,0x0a4b0,0x0b27a,0x06a50,0x06d40,0x0af46,0x0ab60,0x09570,
-        0x04af5,0x04970,0x064b0,0x074a3,0x0ea50,0x06b58,0x055c0,0x0ab60,0x096d5,0x092e0,
-        0x0c960,0x0d954,0x0d4a0,0x0da50,0x07552,0x056a0,0x0abb7,0x025d0,0x092d0,0x0cab5,
-        0x0a950,0x0b4a0,0x0baa4,0x0ad50,0x055d9,0x04ba0,0x0a5b0,0x15176,0x052b0,0x0a930,
-        0x07954,0x06aa0,0x0ad50,0x05b52,0x04b60,0x0a6e6,0x0a4e0,0x0d260,0x0ea65,0x0d530,
-        0x05aa0,0x076a3,0x096d0,0x04bd7,0x04ad0,0x0a4d0,0x1d0b6,0x0d250,0x0d520,0x0dd45,
-        0x0b5a0,0x056d0,0x055b2,0x049b0,0x0a577,0x0a4b0,0x0aa50,0x1b255,0x06d20,0x0ada0)
-
-    var solarMonth=new Array(31,28,31,30,31,30,31,31,30,31,30,31);
-    var Animals=new Array("鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪");
-    var solarTerm = new Array("小寒","大寒","立春","雨水","惊蛰","春分","清明","谷雨","立夏","小满","芒种","夏至","小暑","大暑","立秋","处暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至");
-    var sTermInfo = new Array(0,21208,42467,63836,85337,107014,128867,150921,173149,195551,218072,240693,263343,285989,308563,331033,353350,375494,397447,419210,440795,462224,483532,504758);
-    var nStr1 = new Array('日','一','二','三','四','五','六','七','八','九','十');
-    var nStr2 = new Array('初','十','廿','卅');
-    //公历节日
-    var sFtv = new Array(
-        "0101 元旦",
-        "0214 情人节",
-        "0308 妇女节",
-        "0312 植树节",
-        "0315 消费者权益日",
-        "0401 愚人节",
-        "0501 劳动节",
-        "0504 青年节",
-        "0512 护士节",
-        "0601 儿童节",
-        "0701 建党节",
-        "0801 建军节",
-        "0910 教师节",
-        "0928 孔子诞辰",
-        "1001 国庆节",
-        "1006 老人节",
-        "1024 联合国日",
-        "1224 平安夜",
-        "1225 圣诞节")
-    //农历节日
-    var lFtv = new Array(
-        "0101 春节",
-        "0115 元宵节",
-        "0505 端午节",
-        "0707 七夕情人节",
-        "0715 中元节",
-        "0815 中秋节",
-        "0909 重阳节",
-        "1208 腊八节",
-        "1224 小年")
-    //返回农历y年的总天数
-    function lYearDays(y) {
-        var i, sum = 348;
-        for(i=0x8000; i>0x8; i>>=1)sum+=(lunarInfo[y-1900]&i)?1:0;
-        return(sum+leapDays(y));
-    }
-    //返回农历y年闰月的天数
-    function leapDays(y) {
-        if(leapMonth(y))  return((lunarInfo[y-1900] & 0x10000)? 30: 29);
-        else return(0);
-    }
-    //判断y年的农历中那个月是闰月,不是闰月返回0
-    function leapMonth(y){
-        return(lunarInfo[y-1900]&0xf);
-    }
-    //返回农历y年m月的总天数
-    function monthDays(y,m){
-        return((lunarInfo[y-1900]&(0x10000>>m))?30:29);
-    }
-    //算出当前月第一天的农历日期和当前农历日期下一个月农历的第一天日期
-    function Dianaday(objDate) {
-        var i, leap=0, temp=0;
-        var baseDate = new Date(1900,0,31);
-        var offset   = (objDate - baseDate)/86400000;
-        this.dayCyl = offset+40;
-        this.monCyl = 14;
-        for(i=1900; i<2050 && offset>0; i++) {
-            temp = lYearDays(i)
-            offset -= temp;
-            this.monCyl += 12;
-        }
-        if(offset<0) {
-            offset += temp;
-            i--;
-            this.monCyl -= 12;
-        }
-        this.year = i;
-        this.yearCyl=i-1864;
-        leap = leapMonth(i); //闰哪个月
-        this.isLeap = false;
-        for(i=1; i<13 && offset>0; i++) {
-            if(leap>0 && i==(leap+1) && this.isLeap==false){  //闰月
-                --i; this.isLeap = true; temp = leapDays(this.year);}
-            else{
-                temp = monthDays(this.year, i);}
-            if(this.isLeap==true && i==(leap+1)) this.isLeap = false; //解除闰月
-            offset -= temp;
-            if(this.isLeap == false) this.monCyl++;
-        }
-        if(offset==0 && leap>0 && i==leap+1)
-            if(this.isLeap){ this.isLeap = false;}
-            else{this.isLeap=true;--i;--this.monCyl;}
-        if(offset<0){offset+=temp;--i;--this.monCyl;}
-        this.month=i;
-        this.day=offset+1;
-    }
-    //返回公历y年m+1月的天数
-    function solarDays(y,m){
-        if(m==1)
-            return(((y%4==0)&&(y%100!=0)||(y%400==0))?29:28);
-        else
-            return(solarMonth[m]);
-    }
-    //记录公历和农历某天的日期
-    function calElement(sYear,sMonth,sDay,week,lYear,lMonth,lDay,isLeap) {
-        this.isToday = false;
-        //公历
-        this.sYear = sYear;
-        this.sMonth = sMonth;
-        this.sDay = sDay;
-        this.week = week;
-        //农历
-        this.lYear = lYear;
-        this.lMonth = lMonth;
-        this.lDay = lDay;
-        this.isLeap = isLeap;
-        //节日记录
-        this.lunarFestival = ''; //农历节日
-        this.solarFestival = ''; //公历节日
-        this.solarTerms = ''; //节气
-    }
-    //返回某年的第n个节气为几日(从0小寒起算)
-    function sTerm(y,n) {
-        var offDate = new Date((31556925974.7*(y-1900)+sTermInfo[n]*60000)+Date.UTC(1900,0,6,2,5));
-        return(offDate.getUTCDate())
-    }
-    //保存y年m+1月的相关信息
-    var fat=mat=9;
-    var eve=0;
-    function calendar(y,m) {
-        fat=mat=0;
-        var sDObj,lDObj,lY,lM,lD=1,lL,lX=0,tmp1,tmp2;
-        var lDPOS = new Array(3);
-        var n = 0;
-        var firstLM = 0;
-        sDObj = new Date(y,m,1); //当月第一天的日期
-        this.length = solarDays(y,m);    //公历当月天数
-        this.firstWeek = sDObj.getDay();    //公历当月1日星期几
-        if ((m+1)==5){fat=sDObj.getDay()}
-        if ((m+1)==6){mat=sDObj.getDay()}
-        for(var i=0;i<this.length;i++) {
-            if(lD>lX) {
-                sDObj = new Date(y,m,i+1);    //当月第一天的日期
-                lDObj = new Dianaday(sDObj);     //农历
-                lY = lDObj.year;           //农历年
-                lM = lDObj.month;          //农历月
-                lD = lDObj.day;            //农历日
-                lL = lDObj.isLeap;         //农历是否闰月
-                lX = lL? leapDays(lY): monthDays(lY,lM); //农历当月最後一天
-                if (lM==12){eve=lX}
-                if(n==0) firstLM = lM;
-                lDPOS[n++] = i-lD+1;
-            }
-            this[i] = new calElement(y,m+1,i+1,nStr1[(i+this.firstWeek)%7],lY,lM,lD++,lL);
-            if((i+this.firstWeek)%7==0){
-                this[i].color = 'red';  //周日颜色
-            }
-        }
-        //节气
-        tmp1=sTerm(y,m*2)-1;
-        tmp2=sTerm(y,m*2+1)-1;
-        this[tmp1].solarTerms = solarTerm[m*2];
-        this[tmp2].solarTerms = solarTerm[m*2+1];
-        if((this.firstWeek+12)%7==5) //黑色星期五
-            this[12].solarFestival += '黑色星期五';
-        if(y==tY && m==tM) this[tD-1].isToday = true;  //今日
-    }
-    //用中文显示农历的日期
-    function cDay(d){
-        var s;
-        switch (d) {
-            case 10:
-                s = '初十'; break;
-            case 20:
-                s = '二十'; break;
-                break;
-            case 30:
-                s = '三十'; break;
-                break;
-            default :
-                s = nStr2[Math.floor(d/10)];
-                s += nStr1[Math.floor(d%10)];
-        }
-        return(s);
-    }
-    //在表格中显示公历和农历的日期,以及相关节日
-    var cld;
-    function drawCld(SY,SM) {
-        var TF=true;
-        var p1=p2="";
-        var i,sD,s,size;
-        cld = new calendar(SY,SM);
-        GZ.innerHTML = '【'+Animals[(SY-4)%12]+'】'; //生肖
-        for(i=0;i<42;i++) {
-            gObj=eval('GD'+ i);
-            sObj=eval('SD'+ i);
-            lObj=eval('LD'+ i);
-            sObj.className = '';
-            sD = i - cld.firstWeek;
-            if(sD>-1 && sD<cld.length) { //日期内
-                sObj.innerHTML = sD+1;
-                if(cld[sD].isToday){ sObj.style.color = '#9900FF'; gObj.style.background='#ff00ff'} //今日颜色
-                else{sObj.style.color = '';}
-                if(cld[sD].lDay==1){ //显示农历月
-                    lObj.innerHTML = '<b>'+(cld[sD].isLeap?'闰':'') + cld[sD].lMonth + '月' + (monthDays(cld[sD].lYear,cld[sD].lMonth)==29?'小':'大')+'</b>';
-                }
-                else{lObj.innerHTML = cDay(cld[sD].lDay);} //显示农历日
-                var Slfw=Ssfw=null;
-                s=cld[sD].solarFestival;
-                for (var ipp=0;ipp<lFtv.length;ipp++){  //农历节日
-                    if (parseInt(lFtv[ipp].substr(0,2))==(cld[sD].lMonth)){
-                        if (parseInt(lFtv[ipp].substr(2,4))==(cld[sD].lDay)){
-                            lObj.innerHTML=lFtv[ipp].substr(5);
-                            Slfw=lFtv[ipp].substr(5);
-                        }
-                    }
-                    if (12==(cld[sD].lMonth)){  //判断是否为除夕
-                        if (eve==(cld[sD].lDay)){lObj.innerHTML="除夕";Slfw="除夕";}
-                    }
-                }
-                for (var ipp=0;ipp<sFtv.length;ipp++){  //公历节日
-                    if (parseInt(sFtv[ipp].substr(0,2))==(SM+1)){
-                        if (parseInt(sFtv[ipp].substr(2,4))==(sD+1)){
-                            lObj.innerHTML=sFtv[ipp].substr(5);
-                            Ssfw=sFtv[ipp].substr(5);
-                        }
-                    }
-                }
-                if ((SM+1)==5){ //母亲节
-                    if (fat==0){
-                        if ((sD+1)==7){Ssfw="母亲节";lObj.innerHTML="母亲节"}
-                    }
-                    else if (fat<9){
-                        if ((sD+1)==((7-fat)+8)){Ssfw="母亲节";lObj.innerHTML="母亲节"}
-                    }
-                }
-                if ((SM+1)==6){ //父亲节
-                    if (mat==0){
-                        if ((sD+1)==14){Ssfw="父亲节";lObj.innerHTML="父亲节"}
-                    }
-                    else if (mat<9){
-                        if ((sD+1)==((7-mat)+15)){Ssfw="父亲节";lObj.innerHTML="父亲节"}
-                    }
-                }
-                if (s.length<=0){  //设置节气的颜色
-                    s=cld[sD].solarTerms;
-                    if(s.length>0) s = s.fontcolor('limegreen');
-                }
-                if(s.length>0) {lObj.innerHTML=s;Slfw=s;}  //节气
-                if ((Slfw!=null)&&(Ssfw!=null)){
-                    lObj.innerHTML=Slfw+"/"+Ssfw;
-                }
-            }
-            else { //非日期
-                sObj.innerHTML = '';
-                lObj.innerHTML = '';
-            }
-        }
-    }
-    console.log("\u767e\u5ea6\u641c\u7d22\u3010\u7d20\u6750\u5bb6\u56ed\u3011\u4e0b\u8f7d\u66f4\u591aJS\u7279\u6548\u4ee3\u7801");
-    //在下拉列表中选择年月时,调用自定义函数drawCld(),显示公历和农历的相关信息
-    function changeCld() {
-        var y,m;
-        y=CLD.SY.selectedIndex+1900;
-        m=CLD.SM.selectedIndex;
-        drawCld(y,m);
-    }
-    //用自定义变量保存当前系统中的年月日
-    var Today = new Date();
-    var tY = Today.getFullYear();
-    var tM = Today.getMonth();
-    var tD = Today.getDate();
-    //打开页时,在下拉列表中显示当前年月,并调用自定义函数drawCld(),显示公历和农历的相关信息
-    function initial() {
-        document.getElementById("r1").checked = true;
-        CLD.SY.selectedIndex=tY-1900;
-        CLD.SM.selectedIndex=tM;
-        drawCld(tY,tM);
-    }
-</script>
-<script type="text/javascript">
-    var v = 0;
-    function cls(){
-        document.getElementById("word").value="";
-    }
-    function radioClicked(v){
-        this.v = v;
-        if (v == 1){
-            document.getElementById("s1").style.display = "block";
-            document.getElementById("s2").style.display = "none";
-            document.getElementById("s3").style.display = "none";
-            document.getElementById("word").name="word";
-            document.getElementById("form1").action= "https://www.baidu.com/s";
-        }
-        if (v == 2){
-            document.getElementById("s1").style.display = "none";
-            document.getElementById("s2").style.display = "block";
-            document.getElementById("s3").style.display = "none";
-            document.getElementById("word").name="q";
-            document.getElementById("form1").action= "https://www4.bing.com/search";
-        }
-        if (v == 3){
-            document.getElementById("s1").style.display = "none";
-            document.getElementById("s2").style.display = "none";
-            document.getElementById("s3").style.display = "block";
-            document.getElementById("word").name="q";
-            document.getElementById("form1").action= "https://www.google.com/search";
-        }
-    }
-
-    function cc(s){
-    }
-</script>
-
