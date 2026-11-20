@@ -1,50 +1,15 @@
-name: request to circleci to deploy
+name: build and deploy
 on:
   push:
     branches:
       - release
 jobs:
-  job_build:
-    name: Build
-    runs-on: ubuntu-latest
-    env:
-      CIRCLE_TOKEN: ${{ secrets.CIRCLE_TOKEN }}
-      ORG_PROJECT_ID: ${{ secrets.ORG_PROJECT_ID }}
-      DEFINITION_ID: ${{ secrets.DEFINITION_ID }}
+  deploy:
+    name: Deploy
+    runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v3
-      - name: Trigger CircleCI Pipeline  
-        shell: bash
+      - uses: actions/checkout@v4
+      - name: Build and run docker
         run: |
-          PIPELINE_ID=$(curl -X POST https://circleci.com/api/v2/project/gh/$ORG_PROJECT_ID/pipeline/run \
-            --header "Circle-Token: $CIRCLE_TOKEN" \
-            --header "content-type: application/json" \
-            --data '{
-            "definition_id": "'"$DEFINITION_ID"'",
-            "config": {"branch": "circleci-project-setup"},
-            "checkout": {"branch": "circleci-project-setup"}
-          }' | jq -r '.id')
-          echo "PIPELINE_ID=$PIPELINE_ID" >> $GITHUB_ENV
-          echo "Pipeline triggered with ID: $PIPELINE_ID"
-
-      - name: Wait for Pipeline to Finish
-        shell: bash
-        run: |
-          url="https://circleci.com/api/v2/pipeline/${PIPELINE_ID}/workflow?circle-token=${CIRCLE_TOKEN}"
-          echo "Checking pipeline status at: $url"
-          STATUS=$(curl -s "$url" | jq -r '.items[].status')
-
-          while [ "$STATUS" == "running" ]; do
-            echo "Pipeline still running..."
-            sleep 10
-            STATUS=$(curl -s "$url" | jq -r '.items[].status')
-          done
-
-          echo "Pipeline completed with status: $STATUS"
-          if [[ "$STATUS" == "success" ]]; then
-            echo "Proceeding with build, as triggered pipeline was success"
-            exit 0
-          else
-            echo "Stopping build, triggered pipeline was not a success"
-            exit 1
-          fi
+          set -e
+          docker compose up -d --build --force-recreate

@@ -1,0 +1,10 @@
+services:
+  myhome2:
+    image: sucicada/myhome2:latest
+    build: .
+    container_name: myhome2
+    ports:
+      - "9093:8001"
+    volumes:
+      - /home/peng/DATA/myhome2:/root/MyHomePage
+    restart: unless-stopped
